@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: pick_robot_description
+    relative_path: urdf/pick_robot.urdf.xacro
+  srdf:
+    relative_path: config/pick_robot.srdf
+  package_settings:
+    author_name: Gerard Harkema
+    author_email: ga.harkema@avans.nl
+    generated_timestamp: 1697050571
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
