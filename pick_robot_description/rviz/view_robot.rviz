@@ -84,6 +84,10 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
+        beugel_camera_pre:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         beugel_link:
           Alpha: 1
           Show Axes: false
@@ -94,6 +98,32 @@ Visualization Manager:
           Show Trail: false
           Value: true
         beugel_tool:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        epick_base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        epick_body:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        epick_suction_cup:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        epick_tcp:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        epick_tip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        epick_vacuum_state:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -211,12 +241,26 @@ Visualization Manager:
         baseplate_link:
           Value: false
         beugel_camera:
-          Value: true
+          Value: false
+        beugel_camera_pre:
+          Value: false
         beugel_link:
           Value: false
         beugel_link_mesh:
           Value: false
         beugel_tool:
+          Value: false
+        epick_base_link:
+          Value: false
+        epick_body:
+          Value: false
+        epick_suction_cup:
+          Value: true
+        epick_tcp:
+          Value: false
+        epick_tip:
+          Value: false
+        epick_vacuum_state:
           Value: false
         flange:
           Value: false
@@ -227,7 +271,7 @@ Visualization Manager:
         mountingplate_link:
           Value: false
         oak-d_frame:
-          Value: true
+          Value: false
         oak_imu_frame:
           Value: false
         oak_left_camera_frame:
@@ -283,25 +327,32 @@ Visualization Manager:
                                 flange:
                                   tool0:
                                     beugel_link:
-                                      beugel_camera:
-                                        oak-d_frame:
-                                          oak_imu_frame:
-                                            {}
-                                          oak_left_camera_frame:
-                                            oak_left_camera_optical_frame:
+                                      beugel_camera_pre:
+                                        beugel_camera:
+                                          oak-d_frame:
+                                            oak_imu_frame:
                                               {}
-                                          oak_model_origin:
-                                            {}
-                                          oak_rgb_camera_frame:
-                                            oak_rgb_camera_optical_frame:
+                                            oak_left_camera_frame:
+                                              oak_left_camera_optical_frame:
+                                                {}
+                                            oak_model_origin:
                                               {}
-                                          oak_right_camera_frame:
-                                            oak_right_camera_optical_frame:
-                                              {}
+                                            oak_rgb_camera_frame:
+                                              oak_rgb_camera_optical_frame:
+                                                {}
+                                            oak_right_camera_frame:
+                                              oak_right_camera_optical_frame:
+                                                {}
                                       beugel_link_mesh:
                                         {}
                                       beugel_tool:
-                                        {}
+                                        epick_base_link:
+                                          epick_body:
+                                            epick_suction_cup:
+                                              epick_tip:
+                                                epick_tcp:
+                                                  epick_vacuum_state:
+                                                    {}
                                 ft_frame:
                                   {}
       Update Interval: 0
@@ -359,7 +410,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.2563890218734741
+      Distance: 2.5459768772125244
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -374,10 +425,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: -0.4046015441417694
+      Pitch: 0.09039836376905441
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.4003981351852417
+      Yaw: 0.9653975367546082
     Saved: ~
 Window Geometry:
   Displays:

@@ -1,10 +1,11 @@
-# Default initial positions for my_ur5e's ros2_control fake system
+# Default initial positions for pick_robot's ros2_control fake system
 
 initial_positions:
-  elbow_joint: 0.0
-  wrist_1_joint: 0.0
-  wrist_2_joint: 0.0
-  wrist_3_joint: 0.0
-  shoulder_lift_joint: 3.14
-  shoulder_pan_joint: 0.0
+  elbow_joint: -1.57
+  shoulder_lift_joint: -1.57
+  shoulder_pan_joint: 0
+  wrist_1_joint: -1.57
+  wrist_2_joint: 1.57
+  wrist_3_joint: 0
+  
 

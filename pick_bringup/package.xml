@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>pick_bringup</name>
+  <version>2.2.1</version>
+  <description>
+    Bringup UR5e
+  </description>
+
+
+  <author>Gerard Harkema</author>
+  
+
+  <maintainer email="exner@fzi.de">Felix Exner</maintainer>
+  <maintainer email="schnell@fzi.de">Tristan Schnell</maintainer>
+  <maintainer email="lovro.ivanov@gmail.com">Lovro Ivanov</maintainer>
+  <maintainer email="denis@stoglrobotics.de">Denis Stogl</maintainer>
+
+  <license file="LICENSE">BSD-3-Clause</license>
+  <license file="meshes/ur20/LICENSE.txt">Universal Robots A/S’ Terms and Conditions for Use of Graphical Documentation</license>
+  <!--<license file="meshes/ur20/LICENSE.txt" source-files="meshes/ur20/*" type="freeform">Universal Robots A/S’ Terms and Conditions for Use of Graphical Documentation</license>-->
+
+
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
