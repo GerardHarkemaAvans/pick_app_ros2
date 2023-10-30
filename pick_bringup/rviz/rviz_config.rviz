@@ -6,7 +6,7 @@ Panels:
       Expanded:
         - /MotionPlanning1
       Splitter Ratio: 0.5
-    Tree Height: 239
+    Tree Height: 222
   - Class: rviz_common/Help
     Name: Help
   - Class: rviz_common/Views
@@ -84,6 +84,53 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          beugel_camera:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          beugel_camera_pre:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          beugel_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          beugel_link_mesh:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          beugel_tool:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          epick_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          epick_body:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          epick_suction_cup:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          epick_tcp:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          epick_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          epick_vacuum_state:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           flange:
             Alpha: 1
             Show Axes: false
@@ -102,6 +149,43 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          oak-d_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_imu_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_left_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_left_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_model_origin:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          oak_rgb_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_rgb_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_right_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_right_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           robot_base_link:
             Alpha: 1
             Show Axes: false
@@ -203,6 +287,53 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          beugel_camera:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          beugel_camera_pre:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          beugel_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          beugel_link_mesh:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          beugel_tool:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          epick_base_link:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          epick_body:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          epick_suction_cup:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          epick_tcp:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          epick_tip:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          epick_vacuum_state:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           flange:
             Alpha: 1
             Show Axes: false
@@ -221,6 +352,43 @@ Visualization Manager:
             Show Axes: false
             Show Trail: false
             Value: true
+          oak-d_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_imu_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_left_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_left_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_model_origin:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+            Value: true
+          oak_rgb_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_rgb_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_right_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_right_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           robot_base_link:
             Alpha: 1
             Show Axes: false
@@ -313,7 +481,7 @@ Window Geometry:
     collapsed: false
   MotionPlanning - Trajectory Slider:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000001f300000375fc0200000005fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004100fffffffb000000100044006900730070006c006100790073010000003d00000172000000c900fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000001b5000001fd0000017d00fffffffb0000000800480065006c0070000000029a0000006e0000006e00fffffffb0000000a0056006900650077007300000002fd000000b5000000a400ffffff000002b70000037500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000001f300000375fc0200000008fb00000044004d006f00740069006f006e0050006c0061006e006e0069006e00670020002d0020005400720061006a006500630074006f0072007900200053006c00690064006500720000000000ffffffff0000004100fffffffb000000100044006900730070006c006100790073010000003d00000161000000c900fffffffb0000001c004d006f00740069006f006e0050006c0061006e006e0069006e006701000001a40000020e0000017d00fffffffb0000000800480065006c0070000000029a0000006e0000006e00fffffffb0000000a0056006900650077007300000002fd000000b5000000a400fffffffb000000140069006d006100670065005f00720065006300740000000000ffffffff0000000000000000fb0000002a0049006d006100670065005f0077005f0062006f007500640069006e0067005f0062006f007800650073010000039c000000160000000000000000fb0000001c0049006d006100670065005f006f0072006900670069006e0061006c0000000000ffffffff0000000000000000000002b70000037500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Views:
     collapsed: false
   Width: 1200

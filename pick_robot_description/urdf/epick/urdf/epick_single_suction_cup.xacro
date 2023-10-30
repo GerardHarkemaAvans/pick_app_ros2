@@ -3,7 +3,9 @@
 
   <!-- Include EPick Body and helper macros -->
   <xacro:include filename="epick_body.xacro"/>
+  <!-- removed by gerard -->
 <!--
+
   <xacro:include filename="$(find epick_description)/urdf/epick_driver_ros2_control.xacro" />
 -->
   <!-- Robotiq EPick + Suction Cup with optional extension
@@ -88,7 +90,7 @@
 
     <!-- To allow MoveIt to actuate the gripper as part of a trajectory, we need to include a fake "joint" in the URDF corresponding to the Epick's vacuum state. -->
     <link name="${prefix}epick_vacuum_state"/>
-    <joint name="gripper" type="revolute">
+    <joint name="gripper" type="fixed"> <!-- changed by gerard -->
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <parent link="${prefix}epick_tcp"/>
       <child link="${prefix}epick_vacuum_state"/>
