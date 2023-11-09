@@ -199,7 +199,7 @@
 
 
   <!-- bracket/beugel -->
-  <xacro:include filename="beugel/urdf/Beugel.urdf.xacro" />
+  <xacro:include filename="beugel/urdf/BeugelArrow.urdf.xacro" />
   <xacro:beugel/>
 
 
@@ -233,14 +233,16 @@
 
     <xacro:depthai_camera camera_name = "oak" parent = "beugel_camera" camera_model = "OAD-D" base_frame = "oak-d_frame" cam_pos_x = "0" cam_pos_y = "0" cam_pos_z = "0" cam_roll = "0" cam_pitch = "0" cam_yaw = "0"/>
 --> 
-  <xacro:include filename="beugel/urdf/Beugel.urdf.xacro" />
-  <xacro:include filename="epick/urdf/epick_single_suction_cup.xacro" />
 
 <!--
-  <xacro:include filename="$(find epick_description)/urdf/epick_single_suction_cup.xacro"/>
+
+  <xacro:include filename="epick/urdf/epick_single_suction_cup.xacro" />
 -->
+<!--
+  <xacro:include filename="$(find epick_description)/urdf/epick_single_suction_cup.xacro"/>
 
   <xacro:epick_single_suction_cup parent="beugel_tool" use_fake_hardware="true"/>
+-->
 
  
 </robot>

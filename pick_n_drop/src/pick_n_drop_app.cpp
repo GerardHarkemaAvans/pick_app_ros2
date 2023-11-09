@@ -10,7 +10,6 @@ int main(int argc, char ** argv)
 
   rclcpp::init(argc, argv);
   auto node = rclcpp::Node::make_shared("pick_n_drop_node");
-  //rclcpp::spin(std::make_shared<DepthaiClass>());
   
   DepthaiClass test(node);
 
