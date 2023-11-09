@@ -62,6 +62,10 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
+        arrow_tcp:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         base:
           Alpha: 1
           Show Axes: false
@@ -98,32 +102,6 @@ Visualization Manager:
           Show Trail: false
           Value: true
         beugel_tool:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        epick_base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        epick_body:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        epick_suction_cup:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        epick_tcp:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        epick_tip:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        epick_vacuum_state:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -232,6 +210,8 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: false
+        arrow_tcp:
+          Value: true
         base:
           Value: false
         base_link:
@@ -249,18 +229,6 @@ Visualization Manager:
         beugel_link_mesh:
           Value: false
         beugel_tool:
-          Value: false
-        epick_base_link:
-          Value: false
-        epick_body:
-          Value: false
-        epick_suction_cup:
-          Value: true
-        epick_tcp:
-          Value: false
-        epick_tip:
-          Value: false
-        epick_vacuum_state:
           Value: false
         flange:
           Value: false
@@ -344,15 +312,10 @@ Visualization Manager:
                                               oak_right_camera_optical_frame:
                                                 {}
                                       beugel_link_mesh:
-                                        {}
+                                        arrow_tcp:
+                                          {}
                                       beugel_tool:
-                                        epick_base_link:
-                                          epick_body:
-                                            epick_suction_cup:
-                                              epick_tip:
-                                                epick_tcp:
-                                                  epick_vacuum_state:
-                                                    {}
+                                        {}
                                 ft_frame:
                                   {}
       Update Interval: 0
@@ -410,7 +373,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 2.5459768772125244
+      Distance: 1.4984194040298462
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -425,10 +388,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.09039836376905441
+      Pitch: -0.2596016228199005
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.9653975367546082
+      Yaw: 0.48539790511131287
     Saved: ~
 Window Geometry:
   Displays:
