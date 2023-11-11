@@ -14,7 +14,10 @@
   <link name="beugel_link_mesh">
     <inertial>
       <origin
+
         xyz="5.3816E-10 -0.009384 0.0069302"
+
+
         rpy="0 0 0" />
       <mass
         value="0.02897" />
@@ -33,11 +36,11 @@
       <geometry>
         <mesh
           filename="package://pick_robot_description/urdf/beugel/meshes/Beugel-OAK-D-Arrow.SLDPRT.STL"
-          scale="0.0005 0.0005 0.0005"
+          scale="0.001 0.001 0.001"
            />
       </geometry>
       <material name="BeugelColor">
-        <color rgba="0.25 0.25 0.25 1" />
+        <color rgba="0 0 1 1" />
 
         <!--
         <texture

@@ -40,6 +40,10 @@ from launch.actions import DeclareLaunchArgument, OpaqueFunction
 from launch.conditions import IfCondition
 from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
 
+from launch.actions import IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from ament_index_python.packages import get_package_share_directory
+
 
 def launch_setup(context, *args, **kwargs):
     # Initialize Arguments
@@ -137,20 +141,9 @@ def launch_setup(context, *args, **kwargs):
 
 
     # MoveIt Configuration
-    if 0:
-        pathje = str(moveit_config_package.perform(context))
-        print(".......1")
-        print(pathje)
-        path = str(PathJoinSubstitution([pathje, "config", str(moveit_config_file.perform(context))])) # onduidelijk waarom deze fout gaat
-        print(".......2")
-        print(path) 
-    path = "/home/gerard/pick_ws/src/pick_app_ros2/pick_moveit_config/config/pick_robot.srdf" # deze vervangt bovenstaande regel
-    #print(".......3")
-    #print(path) 
-    with open(path, 'r') as f:
+    path_srdf =  os.path.join(get_package_share_directory('pick_moveit_config'), "config/pick_robot.srdf")
+    with open(path_srdf, 'r') as f:
         robot_description_semantic_content = f.read()
-    #robot_description_semantic_content = xacro(path)
-    #robot_description_semantic_content = load_file("pick_moveit_config", "config/pick_robot.srdf")
 
 
     robot_description_semantic = {"robot_description_semantic": robot_description_semantic_content}
@@ -269,7 +262,13 @@ def launch_setup(context, *args, **kwargs):
         output="screen",
     )
 
-    nodes_to_start = [move_group_node, rviz_node]#, servo_node]
+    robot_description_node = IncludeLaunchDescription(
+      PythonLaunchDescriptionSource([os.path.join(
+         get_package_share_directory('pick_bringup'), 'launch'),
+         '/load_robot_description.launch.py'])
+      )
+
+    nodes_to_start = [move_group_node, rviz_node, robot_description_node]#, servo_node]
     
     return nodes_to_start
 

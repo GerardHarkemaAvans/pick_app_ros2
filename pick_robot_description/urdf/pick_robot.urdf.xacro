@@ -197,11 +197,25 @@
     <origin xyz="0.0 0.0 0.01" rpy="0.0 0.0 ${pi}"/>
   </joint>
 
+  <link name= "pick_tcp" />
+
+
 
   <!-- bracket/beugel -->
   <xacro:include filename="beugel/urdf/BeugelArrow.urdf.xacro" />
   <xacro:beugel_arrow/>
 
+  <joint name="pick_tcp_to_pick_tcp" type="fixed">
+    <parent link="arrow_tcp" />
+    <child link="pick_tcp" />
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+
+
+  <!--
+  <xacro:include filename="beugel/urdf/Beugel.urdf.xacro" />
+  <xacro:beugel/>
+  -->
 
   <!-- tool0 to beugel_base_position -->
   <!-- cahnge these valuse to place the beugel on the right position -->
