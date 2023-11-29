@@ -165,25 +165,50 @@ def generate_launch_description():
             ],
             output='screen',)
 
-    point_cloud_node = launch_ros.actions.ComposableNodeContainer(
-            name='container2',
-            namespace='',
-            package='rclcpp_components',
-            executable='component_container',
-            composable_node_descriptions=[
-                # Driver itself
-                launch_ros.descriptions.ComposableNode(
-                    package='depth_image_proc',
-                    plugin='depth_image_proc::PointCloudXyziNode',
-                    name='point_cloud_xyzi',
+    color_pointcloud = True
 
-                    remappings=[('depth/image_rect', '/stereo/converted_depth'),
-                                ('intensity/image_rect', '/right/image_rect'),
-                                ('intensity/camera_info', '/right/camera_info'),
-                                ('points', '/stereo/points')]
-                ),
-            ],
-            output='screen',)
+    if not color_pointcloud:
+
+        point_cloud_node = launch_ros.actions.ComposableNodeContainer(
+                name='container2',
+                namespace='',
+                package='rclcpp_components',
+                executable='component_container',
+                composable_node_descriptions=[
+                    # Driver itself
+                    launch_ros.descriptions.ComposableNode(
+                        package='depth_image_proc',
+                        plugin='depth_image_proc::PointCloudXyziNode',
+                        name='point_cloud_xyzi',
+
+                        remappings=[('depth/image_rect', '/stereo/converted_depth'),
+                                    ('intensity/image_rect', '/right/image_rect'),
+                                    ('intensity/camera_info', '/right/camera_info'),
+                                    ('points', '/stereo/points')]
+                    ),
+                ],
+                output='screen',)
+    else:
+        point_cloud_node = launch_ros.actions.ComposableNodeContainer(
+                name='container2',
+                namespace='',
+                package='rclcpp_components',
+                executable='component_container',
+                composable_node_descriptions=[
+                    # Driver itself
+                    launch_ros.descriptions.ComposableNode(
+                        package='depth_image_proc',
+                        plugin='depth_image_proc::PointCloudXyzrgbNode',
+                        name='point_cloud_xyzrgb',
+
+                        remappings=[('depth_registered/image_rect', '/stereo/converted_depth'),
+                                    ('rgb/image_rect_color', '/color/image_rect'),
+                                    ('rgb/camera_info', '/color/camera_info'),
+                                    ('points', '/stereo/points')]
+                    ),
+                ],
+                output='screen',)
+    
 
     rviz_node = launch_ros.actions.Node(
             package='rviz2', executable='rviz2', output='screen',

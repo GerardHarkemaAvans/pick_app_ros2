@@ -95,20 +95,34 @@ def generate_launch_description():
     mock_sensor_commands = LaunchConfiguration("mock_sensor_commands")
     initial_joint_controller = LaunchConfiguration("initial_joint_controller")
     activate_joint_controller = LaunchConfiguration("activate_joint_controller")
-    launch_rviz = LaunchConfiguration("launch_rviz")
+    #launch_rviz = LaunchConfiguration("launch_rviz")
     
-    base_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([FindPackageShare("ur_robot_driver"), "/launch", "/ur_control.launch.py"]),
-        launch_arguments={
-            "ur_type": "ur3",
-            "robot_ip": robot_ip,
-            "use_mock_hardware": use_mock_hardware,
-            "mock_sensor_commands": mock_sensor_commands,
-            "initial_joint_controller": initial_joint_controller,
-            "activate_joint_controller": activate_joint_controller,
-            "launch_rviz": launch_rviz
-        }.items(),
-    )
+    if 0:
+	    base_launch = IncludeLaunchDescription(
+		PythonLaunchDescriptionSource([FindPackageShare("ur_robot_driver"), "/launch", "/ur_control.launch.py"]),
+		launch_arguments={
+		    "ur_type": "ur3",
+		    "robot_ip": robot_ip,
+		    "use_mock_hardware": use_mock_hardware,
+		    "mock_sensor_commands": mock_sensor_commands,
+		    "initial_joint_controller": initial_joint_controller,
+		    "activate_joint_controller": activate_joint_controller,
+		    "launch_rviz": launch_rviz
+		}.items(),
+	    )
+    else:
+	    base_launch = IncludeLaunchDescription(
+		PythonLaunchDescriptionSource([FindPackageShare("ur_robot_driver"), "/launch", "/ur_control.launch.py"]),
+		launch_arguments={
+		    "ur_type": "ur3",
+		    "robot_ip": robot_ip,
+		    "use_mock_hardware": use_mock_hardware,
+		    "mock_sensor_commands": mock_sensor_commands,
+		    "initial_joint_controller": initial_joint_controller,
+		    "activate_joint_controller": activate_joint_controller
+		}.items(),
+	    )
+
 
     return LaunchDescription(declared_arguments + [base_launch])
 
