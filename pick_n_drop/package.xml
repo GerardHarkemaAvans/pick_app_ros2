@@ -5,7 +5,7 @@
   <description>The pick_n_drop package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
-  <maintainer email="ga.harkema@avans.nl">sachin</maintainer>
+  <maintainer email="ga.harkema@avans.nl">user</maintainer>
   <author>Gerard Harkema</author>
 
   <license>MIT</license>
@@ -25,6 +25,8 @@
   <depend>vision_msgs</depend>
   #<depend>foxglove_msgs</depend>
   <depend>rviz_imu_plugin</depend>
+
+  <depend>moveit_ros_planning_interface</depend>
 
   <depend>rclpy</depend>
 

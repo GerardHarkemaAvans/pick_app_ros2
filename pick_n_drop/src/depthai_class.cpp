@@ -1,20 +1,26 @@
 #include <memory>
 
 #include "rclcpp/rclcpp.hpp"
-//#include "rclcpp/executors.hpp"
-//#include "rclcpp/node.hpp"
+// #include "rclcpp/executors.hpp"
+// #include "rclcpp/node.hpp"
 #include "std_msgs/msg/string.hpp"
 using std::placeholders::_1;
 
 #include "pick_n_drop/depthai_class.hpp"
 
 
-
-DepthaiClass::DepthaiClass(std::shared_ptr<rclcpp::Node> node): _node(node){
-
+DepthaiClass::DepthaiClass(std::shared_ptr<rclcpp::Node> node) : _node(node)
+{
+      pointcloud_subscription_ = node->create_subscription<sensor_msgs::msg::PointCloud2>("name", 10, std::bind(&DepthaiClass::pointcloud_callback, this, std::placeholders::_1));
+      image_subscription_ = node->create_subscription<sensor_msgs::msg::Image>("name", 10, std::bind(&DepthaiClass::image_callback, this, std::placeholders::_1));
 }
 
-void DepthaiClass::topic_callback(const std_msgs::msg::String::SharedPtr msg) const
+void DepthaiClass::pointcloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) const
 {
-      //RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
+      // RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
+}
+
+void DepthaiClass::image_callback(const sensor_msgs::msg::Image::SharedPtr msg) const
+{
+      // RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg->data.c_str());
 }

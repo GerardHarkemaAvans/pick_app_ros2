@@ -17,8 +17,7 @@ if(NOT OpenCV_FOUND)
   set(_opencv_version 3)
   find_package(OpenCV 3 REQUIRED COMPONENTS imgproc highgui)
 endif()
-
-
+find_package(moveit_ros_planning_interface REQUIRED)
 
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_python REQUIRED)
@@ -46,6 +45,7 @@ set(dependencies
   stereo_msgs
   std_msgs
   vision_msgs
+  moveit_ros_planning_interface
 )
 
 include_directories(
