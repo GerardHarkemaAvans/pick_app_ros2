@@ -33,9 +33,10 @@ find_package(sensor_msgs REQUIRED)
 find_package(stereo_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(vision_msgs REQUIRED)
+find_package(depthai_ros_msgs REQUIRED)
+
 
 find_package(rclpy REQUIRED)
-
 
 set(dependencies
   camera_info_manager
@@ -46,6 +47,7 @@ set(dependencies
   std_msgs
   vision_msgs
   moveit_ros_planning_interface
+  depthai_ros_msgs
 )
 
 include_directories(

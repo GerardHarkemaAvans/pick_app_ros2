@@ -11,6 +11,7 @@
 using std::placeholders::_1;
 #include "sensor_msgs/msg/point_cloud2.hpp"
 #include "sensor_msgs/msg/image.hpp"
+#include "depthai_ros_msgs/msg/spatial_detection_array.hpp"
 
 //#include "pick_n_drop/depthai_class.hpp"
 
@@ -23,8 +24,11 @@ class DepthaiClass
   private:
     void pointcloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) const;
     void image_callback(const sensor_msgs::msg::Image::SharedPtr msg) const;
+    void detections_callback(const depthai_ros_msgs::msg::SpatialDetectionArray::SharedPtr msg) const;
+    
     rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr pointcloud_subscription_;
     rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr image_subscription_;
+    rclcpp::Subscription<depthai_ros_msgs::msg::SpatialDetectionArray>::SharedPtr detections_subscription_;
 
 };
 

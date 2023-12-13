@@ -26,6 +26,9 @@
   #<depend>foxglove_msgs</depend>
   <depend>rviz_imu_plugin</depend>
 
+  <depend>depthai</depend>
+  <depend>depthai_ros_msgs</depend>
+
   <depend>moveit_ros_planning_interface</depend>
 
   <depend>rclpy</depend>
