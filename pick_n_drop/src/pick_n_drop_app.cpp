@@ -26,24 +26,47 @@ int main(int argc, char **argv)
   typedef enum states
   {
     idle,
-    start
+    start,
+    robot_go_photo_pos,
+    camera_take_pcl_photo,
+    robot_go_resting_pos,
+    end,
   } STATES;
 
   STATES state = idle;
+
+  //string group_states[] = {"home", "left", "right", "home", "resting", "photo"};
+
+  bool break_flag = false;
 
   for (;;)
   {
     switch (state)
     {
-    case idle:
-      state = start;
-      break;
-    case start:
-      break;
+      case idle:
+        state = start;
+        break;
+      case start:
+        break;
+      case robot_go_photo_pos:
+        UrControl.movePose("photo");
+        state = camera_take_pcl_photo;
+        break;
+      case camera_take_pcl_photo:
+        Depthai.TakePCLPhoto();
+        state = robot_go_resting_pos;
+        break;
+      case robot_go_resting_pos:
+        UrControl.movePose("resting");
+        state = end;
+        break;
+      case end:
+        break_flag = true;
+        break;
     }
-
-    rclcpp::shutdown();
+    if(break_flag) break;
   }
+  rclcpp::shutdown();
 
   return 0;
 }
