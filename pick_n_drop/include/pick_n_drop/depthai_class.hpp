@@ -12,6 +12,19 @@ using std::placeholders::_1;
 #include "sensor_msgs/msg/point_cloud2.hpp"
 #include "sensor_msgs/msg/image.hpp"
 #include "depthai_ros_msgs/msg/spatial_detection_array.hpp"
+//#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+
+
+#include "tf2/exceptions.h"
+#include "tf2_ros/transform_listener.h"
+#include "tf2_ros/buffer.h"
+
+#include <pcl/common/transforms.h>
+#include <pcl/point_types.h>
+#include <pcl/point_cloud.h>
+
+using namespace std::chrono_literals;
+
 
 //#include "pick_n_drop/depthai_class.hpp"
 
@@ -30,9 +43,15 @@ class DepthaiClass
     rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr pointcloud_subscription_;
     rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr image_subscription_;
     rclcpp::Subscription<depthai_ros_msgs::msg::SpatialDetectionArray>::SharedPtr detections_subscription_;
+    std::unique_ptr<tf2_ros::Buffer> tfBuffer_;
 
     //auto pointcloud = sensor_msgs::msg::PointCloud2();
-    sensor_msgs::msg::PointCloud2 pointcloud;
+    //pc2_msg_ = std::make_shared<sensor_msgs::msg::PointCloud2>()
+
+    //sensor_msgs::msg::PointCloud2::SharedPtr pointcloud;
+
+    sensor_msgs::msg::PointCloud2::SharedPtr pc2_msg_;
+
     rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pointcloud_photo_publisher;
     //sensor_msgs::msg::PointCloud2 *message = sensor_msgs::msg::PointCloud2();
 

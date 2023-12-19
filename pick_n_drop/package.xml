@@ -25,6 +25,7 @@
   <depend>vision_msgs</depend>
   #<depend>foxglove_msgs</depend>
   <depend>rviz_imu_plugin</depend>
+  <depend>pcl_1.10</depend>
 
   <depend>depthai</depend>
   <depend>depthai_ros_msgs</depend>

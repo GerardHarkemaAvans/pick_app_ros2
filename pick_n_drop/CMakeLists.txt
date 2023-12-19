@@ -34,6 +34,7 @@ find_package(stereo_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(vision_msgs REQUIRED)
 find_package(depthai_ros_msgs REQUIRED)
+find_package(PCL 1.10 REQUIRED)
 
 
 find_package(rclpy REQUIRED)

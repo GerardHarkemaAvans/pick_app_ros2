@@ -14,15 +14,24 @@ DepthaiClass::DepthaiClass(std::shared_ptr<rclcpp::Node> node) : _node(node)
       pointcloud_subscription_ = node->create_subscription<sensor_msgs::msg::PointCloud2>("name", 10, std::bind(&DepthaiClass::pointcloud_callback, this, std::placeholders::_1));
       image_subscription_ = node->create_subscription<sensor_msgs::msg::Image>("name", 10, std::bind(&DepthaiClass::image_callback, this, std::placeholders::_1));
       detections_subscription_ = node->create_subscription<depthai_ros_msgs::msg::SpatialDetectionArray>("name", 10, std::bind(&DepthaiClass::detections_callback, this, std::placeholders::_1));
+
       pointcloud_photo_publisher = node->create_publisher<sensor_msgs::msg::PointCloud2>("pcl_photo", 10);
 
+      tfBuffer_ = std::make_unique<tf2_ros::Buffer>(node->get_clock());
 
 
-      
 }
 
 void DepthaiClass::pointcloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) const
 {
+      //pcl::PointCloud<pcl::PointXYZ> cloud_in;
+      //pcl::PointCloud<pcl::PointXYZ> cloud_out;
+
+
+      geometry_msgs::msg::TransformStamped transform;
+
+      transform = tfBuffer_->lookupTransform("world", msg->header.frame_id, tf2::TimePointZero);
+      pcl_ros::transformPointCloud(msg, pc2_msg_, transform);
       //pointcloud = msg;
 }
 
@@ -38,6 +47,8 @@ void DepthaiClass::detections_callback(const depthai_ros_msgs::msg::SpatialDetec
 }
 
 int DepthaiClass::TakePCLPhoto(){
-      //pointcloud_photo_publisher(pointcloud);
+      pc2_msg_ = std::make_shared<sensor_msgs::msg::PointCloud2>();
+
+      //pointcloud_photo_publisher(pc2_msg_);
       return 0;
 }
