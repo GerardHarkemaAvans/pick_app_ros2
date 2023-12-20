@@ -24,6 +24,7 @@ DepthaiClass::DepthaiClass(std::shared_ptr<rclcpp::Node> node) : _node(node)
 
 void DepthaiClass::pointcloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) const
 {
+      #if 0
       //pcl::PointCloud<pcl::PointXYZ> cloud_in;
       //pcl::PointCloud<pcl::PointXYZ> cloud_out;
 
@@ -33,6 +34,7 @@ void DepthaiClass::pointcloud_callback(const sensor_msgs::msg::PointCloud2::Shar
       transform = tfBuffer_->lookupTransform("world", msg->header.frame_id, tf2::TimePointZero);
       pcl_ros::transformPointCloud(msg, pc2_msg_, transform);
       //pointcloud = msg;
+      #endif
 }
 
 void DepthaiClass::image_callback(const sensor_msgs::msg::Image::SharedPtr msg) const
@@ -47,8 +49,10 @@ void DepthaiClass::detections_callback(const depthai_ros_msgs::msg::SpatialDetec
 }
 
 int DepthaiClass::TakePCLPhoto(){
-      pc2_msg_ = std::make_shared<sensor_msgs::msg::PointCloud2>();
 
-      //pointcloud_photo_publisher(pc2_msg_);
+      // do some stuff
+
+      pointcloud_photo_publisher->publish(pointcloud);
+
       return 0;
 }
