@@ -9,17 +9,44 @@
 #include "rclcpp/node.hpp"
 #include "std_msgs/msg/string.hpp"
 using std::placeholders::_1;
+#include "sensor_msgs/msg/point_cloud2.hpp"
+#include "sensor_msgs/msg/image.hpp"
+#include "depthai_ros_msgs/msg/spatial_detection_array.hpp"
+//#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
-#include "pick_n_drop/depthai_class.hpp"
+
+#include "tf2/exceptions.h"
+#include "tf2_ros/transform_listener.h"
+#include "tf2_ros/buffer.h"
+
+//#include <pcl/common/transforms.h>
+//#include <pcl/point_types.h>
+//#include <pcl/point_cloud.h>
+
+using namespace std::chrono_literals;
+
+
 
 class DepthaiClass
 {
   std::shared_ptr<rclcpp::Node> _node;
   public:
-    DepthaiClass(std::shared_ptr<rclcpp::Node> node);//: _node(node);
+    DepthaiClass(std::shared_ptr<rclcpp::Node> node);
+    int TakePCLPhoto();
+
 
   private:
-    void topic_callback(const std_msgs::msg::String::SharedPtr msg) const;
+    void pointcloud_callback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) const;
+    void image_callback(const sensor_msgs::msg::Image::SharedPtr msg) const;
+    void detections_callback(const depthai_ros_msgs::msg::SpatialDetectionArray::SharedPtr msg) const;
+    rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr pointcloud_subscription_;
+    rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr image_subscription_;
+    rclcpp::Subscription<depthai_ros_msgs::msg::SpatialDetectionArray>::SharedPtr detections_subscription_;
+    std::unique_ptr<tf2_ros::Buffer> tfBuffer_;
+
+    sensor_msgs::msg::PointCloud2 pointcloud;
+    rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pointcloud_photo_publisher;
+
 };
 
 #endif
