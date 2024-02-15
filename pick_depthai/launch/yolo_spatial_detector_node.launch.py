@@ -46,7 +46,7 @@ def generate_launch_description():
     lrcheck             = LaunchConfiguration('lrcheck', default = True)
     extended            = LaunchConfiguration('extended', default = False)
     LRchecktresh        = LaunchConfiguration('LRchecktresh',      default = 5)
-    monoResolution      = LaunchConfiguration('monoResolution',  default = '720p')
+    monoResolution      = LaunchConfiguration('monoResolution',  default = '400p')
     publish_grayscale_image  = LaunchConfiguration('publish_grayscale_image', default = True)
     publish_depth_image      = LaunchConfiguration('publish_depth_image', default = True)
 
@@ -165,21 +165,7 @@ def generate_launch_description():
         default_value=publish_grayscale_image,
         description='Specifies using gray-scale_image publishing')
 
-
-    urdf_launch = IncludeLaunchDescription(
-                            launch_description_sources.PythonLaunchDescriptionSource(
-                                    os.path.join(urdf_launch_dir, 'urdf_launch.py')),
-                            launch_arguments={'tf_prefix'   : tf_prefix,
-                                              'camera_model': camera_model,
-                                              'base_frame'  : base_frame,
-                                              'parent_frame': parent_frame,
-                                              'cam_pos_x'   : cam_pos_x,
-                                              'cam_pos_y'   : cam_pos_y,
-                                              'cam_pos_z'   : cam_pos_z,
-                                              'cam_roll'    : cam_roll,
-                                              'cam_pitch'   : cam_pitch,
-                                              'cam_yaw'     : cam_yaw}.items())
-    
+   
     yolo_spatial_detector_node = launch_ros.actions.Node(
             package='my_depthai_ros2', executable='yolo_spatial_detector_node',
             output='screen',
@@ -200,7 +186,7 @@ def generate_launch_description():
                         {'publish_depth_image': publish_depth_image}])
 
     metric_converter_node = launch_ros.actions.ComposableNodeContainer(
-            name='container',
+            name='container1',
             namespace='',
             package='rclcpp_components',
             executable='component_container',
@@ -261,11 +247,6 @@ def generate_launch_description():
                     ),
                 ],
                 output='screen',)
-
-
-    rviz_node = launch_ros.actions.Node(
-            package='rviz2', executable='rviz2', output='screen',
-            arguments=['--display-config', default_rviz])
 
     bounding_boxes_node = launch_ros.actions.Node(
             package='my_depthai_ros2', executable='publisch_bouding_boxes.py',
