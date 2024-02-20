@@ -165,7 +165,8 @@ def generate_launch_description():
         default_value=publish_grayscale_image,
         description='Specifies using gray-scale_image publishing')
 
-   
+
+    
     yolo_spatial_detector_node = launch_ros.actions.Node(
             package='my_depthai_ros2', executable='yolo_spatial_detector_node',
             output='screen',
@@ -248,6 +249,8 @@ def generate_launch_description():
                 ],
                 output='screen',)
 
+
+
     bounding_boxes_node = launch_ros.actions.Node(
             package='my_depthai_ros2', executable='publisch_bouding_boxes.py',
             output='screen',
@@ -280,7 +283,7 @@ def generate_launch_description():
     ld.add_action(declare_resourceBaseFolder_cmd)
     ld.add_action(declare_confidence_cmd)
     ld.add_action(declare_sync_nn_cmd)
-    #ld.add_action(urdf_launch)
+
 
     ld.add_action(declare_lrcheck_cmd)
     ld.add_action(declare_extended_cmd)
@@ -304,7 +307,6 @@ def generate_launch_description():
     ld.add_action(metric_converter_node)
     ld.add_action(point_cloud_node)
 
-    #ld.add_action(rviz_node)
     ld.add_action(bounding_boxes_node)
     ld.add_action(tf_node)
     return ld
