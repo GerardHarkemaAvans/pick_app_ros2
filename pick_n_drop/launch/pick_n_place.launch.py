@@ -129,7 +129,8 @@ def launch_setup(context, *args, **kwargs):
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
-            PathJoinSubstitution([FindPackageShare(description_package), "urdf", description_file]),
+            #PathJoinSubstitution([FindPackageShare(description_package), "urdf", description_file]),
+            PathJoinSubstitution([FindPackageShare(description_package), "config", description_file]),
             " ",
         ]
     )
@@ -144,13 +145,13 @@ def launch_setup(context, *args, **kwargs):
         path = str(PathJoinSubstitution([pathje, "config", str(moveit_config_file.perform(context))])) # onduidelijk waarom deze fout gaat
         print(".......2")
         print(path) 
-    path = "/home/gerard/my_ur_ws/src/my_ur5e_ROS2/my_ur5e_moveit_config/config/my_ur5e.srdf" # deze vervangt bovenstaande regel
+    path = "/home/gerard/ur5_pick_ws/src/pick_app_ros2/pick_moveit_config/config/pick_robot.srdf" # deze vervangt bovenstaande regel
     #print(".......3")
     #print(path) 
     with open(path, 'r') as f:
         robot_description_semantic_content = f.read()
     #robot_description_semantic_content = xacro(path)
-    #robot_description_semantic_content = load_file("my_ur5e_moveit_config", "config/my_ur5e.srdf")
+    #robot_description_semantic_content = load_file("pick_moveit_config", "config/my_ur5e.srdf")
 
 
     robot_description_semantic = {"robot_description_semantic": robot_description_semantic_content}
@@ -178,11 +179,11 @@ def launch_setup(context, *args, **kwargs):
             "start_state_max_bounds_error": 0.1,
         }
     }
-    ompl_planning_yaml = load_yaml("my_ur5e_moveit_config", "config/ompl_planning.yaml")
+    ompl_planning_yaml = load_yaml("pick_moveit_config", "config/ompl_planning.yaml")
     ompl_planning_pipeline_config["move_group"].update(ompl_planning_yaml)
 
     # Trajectory Execution Configuration
-    controllers_yaml = load_yaml("my_ur5e_moveit_config", "config/controllers.yaml")
+    controllers_yaml = load_yaml("pick_moveit_config", "config/controllers.yaml")
     # the scaled_joint_trajectory_controller does not work on mock hardware
     change_controllers = context.perform_substitution(use_mock_hardware)
     if change_controllers == "true":
@@ -297,7 +298,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_package",
-            default_value="my_ur5e_description",
+            default_value="pick_moveit_config",
             description="Description package with robot URDF/XACRO files. Usually the argument \
         is not set, it enables use of a custom description.",
         )
@@ -305,14 +306,15 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_file",
-            default_value="ur.urdf.xacro",
+            #default_value="ur.urdf.xacro",
+            default_value="pick_robot.urdf.xacro",
             description="URDF/XACRO description file with the robot.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "moveit_config_package",
-            default_value="my_ur5e_moveit_config",
+            default_value="pick_moveit_config",
             description="MoveIt config package with robot SRDF/XACRO files. Usually the argument \
         is not set, it enables use of a custom moveit config.",
         )
