@@ -139,6 +139,7 @@ def launch_setup(context, *args, **kwargs):
     robot_description = {"robot_description": robot_description_content}
 
 
+
     # MoveIt Configuration
     path_srdf =  os.path.join(get_package_share_directory('pick_moveit_config'), "config/pick_robot.srdf")
     with open(path_srdf, 'r') as f:
@@ -161,7 +162,6 @@ def launch_setup(context, *args, **kwargs):
             os.path.join("config", str(moveit_joint_limits_file.perform(context))),
         )
     }
-
     # Planning Configuration
     ompl_planning_pipeline_config = {
         "move_group": {
@@ -206,11 +206,11 @@ def launch_setup(context, *args, **kwargs):
     }
 
     # Start the actual move_group node/action server
-    print(robot_description)
     move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
+        #arguments=['--ros-args', '--log-level', 'debug'],
         parameters=[
             robot_description,
             robot_description_semantic,
@@ -245,29 +245,31 @@ def launch_setup(context, *args, **kwargs):
             #warehouse_ros_config,
         ],
     )
+    if 0:
 
-    # Servo node for realtime control
-    servo_yaml = load_yaml("ur_moveit_config", "config/ur_servo.yaml")
-    servo_params = {"moveit_servo": servo_yaml}
-    servo_node = Node(
-        package="moveit_servo",
-        condition=IfCondition(launch_servo),
-        executable="servo_node_main",
-        parameters=[
-            servo_params,
-            robot_description,
-            robot_description_semantic,
-        ],
-        output="screen",
-    )
+        # Servo node for realtime control
+        servo_yaml = load_yaml("ur_moveit_config", "config/ur_servo.yaml")
+        servo_params = {"moveit_servo": servo_yaml}
+        servo_node = Node(
+            package="moveit_servo",
+            condition=IfCondition(launch_servo),
+            executable="servo_node_main",
+            parameters=[
+                servo_params,
+                robot_description,
+                robot_description_semantic,
+            ],
+            output="screen",
+        )
 
     robot_description_node = IncludeLaunchDescription(
-      PythonLaunchDescriptionSource([os.path.join(
-         get_package_share_directory('pick_bringup'), 'launch'),
-         '/load_robot_description.launch.py'])
-      )
+    PythonLaunchDescriptionSource([os.path.join(
+        get_package_share_directory('pick_bringup'), 'launch'),
+        '/load_robot_description.launch.py'])
+    )
 
     nodes_to_start = [move_group_node, rviz_node, robot_description_node]#, servo_node]
+    #nodes_to_start = []#robot_description_node]#, servo_node]
     
     return nodes_to_start
 
