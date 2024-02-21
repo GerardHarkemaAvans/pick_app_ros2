@@ -6,8 +6,8 @@ int main(int argc, char **argv)
 {
   (void)argc;
   (void)argv;
-
-  printf("hello world pick_n_drop package\n");
+ 
+  printf("Hello pick_n_drop package\n");
 
   rclcpp::init(argc, argv);
   auto app_node = rclcpp::Node::make_shared("pick_n_drop_node");
@@ -20,7 +20,7 @@ int main(int argc, char **argv)
               { executor.spin(); })
       .detach();
 
-  DepthaiClass Depthai(app_node);
+  //DepthaiClass Depthai(app_node);
   UrControlClass UrControl(app_node);
 
   typedef enum states
@@ -44,23 +44,30 @@ int main(int argc, char **argv)
     switch (state)
     {
       case idle:
+        printf("state: idle");
         state = start;
         break;
       case start:
+        printf("state: start");
         break;
       case robot_go_photo_pos:
+        printf("state: robot_go_photo_pos");
+
         UrControl.movePose("photo");
         state = camera_take_pcl_photo;
         break;
       case camera_take_pcl_photo:
-        Depthai.TakePCLPhoto();
+        printf("state: camera_take_pcl_photo");
+        //Depthai.TakePCLPhoto();
         state = robot_go_resting_pos;
         break;
       case robot_go_resting_pos:
+        printf("state: robot_go_resting_pos");
         UrControl.movePose("resting");
         state = end;
         break;
       case end:
+        printf("state: end");
         break_flag = true;
         break;
     }

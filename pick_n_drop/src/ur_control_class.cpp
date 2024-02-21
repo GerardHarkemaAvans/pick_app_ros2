@@ -23,6 +23,7 @@ UrControlClass::UrControlClass(std::shared_ptr<rclcpp::Node> node) : _node(node)
       // class can be easily set up using just the name of the planning group you would like to control and plan for.
       // moveit::planning_interface::MoveGroupInterface move_group(node, PLANNING_GROUP);
       move_group = new moveit::planning_interface::MoveGroupInterface(node, PLANNING_GROUP);
+      printf("Ready move group\n");
 }
 
 int UrControlClass::movePose(const char *Posename)

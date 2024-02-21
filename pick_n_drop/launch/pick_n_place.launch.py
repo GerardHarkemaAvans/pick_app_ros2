@@ -232,7 +232,25 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
-    nodes_to_start = [demo_node]
+    pick_n_drop_node = Node(
+        package="pick_n_drop",
+        executable="pick_n_drop_node",
+        output="screen",
+        parameters=[
+            robot_description,
+            robot_description_semantic,
+            robot_description_kinematics,
+            robot_description_planning,
+            ompl_planning_pipeline_config,
+            trajectory_execution,
+            planning_scene_monitor_parameters,
+            {"use_sim_time": use_sim_time},
+            #warehouse_ros_config,
+        ],
+    )
+
+    #nodes_to_start = [demo_node]
+    nodes_to_start = [pick_n_drop_node]
     
     return nodes_to_start
 
