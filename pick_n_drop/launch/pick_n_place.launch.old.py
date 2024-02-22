@@ -44,6 +44,8 @@ from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from ament_index_python.packages import get_package_share_directory
 
+
+
 def launch_setup(context, *args, **kwargs):
     # Initialize Arguments
     ur_type = LaunchConfiguration("ur_type")
@@ -63,7 +65,7 @@ def launch_setup(context, *args, **kwargs):
     use_sim_time = LaunchConfiguration("use_sim_time")
     launch_rviz = LaunchConfiguration("launch_rviz")
     launch_servo = LaunchConfiguration("launch_servo")
-    #ur_description_package = LaunchConfiguration("ur_description_package")
+    ur_description_package = LaunchConfiguration("ur_description_package")
 
     '''
     joint_limit_params = PathJoinSubstitution(
@@ -132,12 +134,11 @@ def launch_setup(context, *args, **kwargs):
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
-            PathJoinSubstitution([FindPackageShare(description_package), "urdf", description_file]),
+            PathJoinSubstitution([FindPackageShare(description_package), "config", description_file]),
             " ",
         ]
     )
     robot_description = {"robot_description": robot_description_content}
-
 
 
     # MoveIt Configuration
@@ -162,6 +163,7 @@ def launch_setup(context, *args, **kwargs):
             os.path.join("config", str(moveit_joint_limits_file.perform(context))),
         )
     }
+
     # Planning Configuration
     ompl_planning_pipeline_config = {
         "move_group": {
@@ -172,6 +174,8 @@ def launch_setup(context, *args, **kwargs):
     }
     ompl_planning_yaml = load_yaml("pick_moveit_config", "config/ompl_planning.yaml")
     ompl_planning_pipeline_config["move_group"].update(ompl_planning_yaml)
+
+
 
     # Trajectory Execution Configuration
     controllers_yaml = load_yaml("pick_moveit_config", "config/controllers.yaml")
@@ -206,7 +210,6 @@ def launch_setup(context, *args, **kwargs):
     }
 
     # Start the actual move_group node/action server
-    # Start the actual move_group node/action server
     pick_n_drop_node = Node(
         package="pick_n_drop",
         executable="pick_n_drop_node",
@@ -224,7 +227,9 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
-    nodes_to_start = [pick_n_drop_node]    
+    nodes_to_start = [pick_n_drop_node]
+
+
     return nodes_to_start
 
 
@@ -234,7 +239,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "ur_type",
-            default_value="ur5e",
+            default_value="ur3",
             choices=["ur3", "ur3e", "ur5", "ur5e", "ur10", "ur10e", "ur16e", "ur20"],
         )
     )
@@ -270,7 +275,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_package",
-            default_value="pick_robot_description",
+            default_value="pick_moveit_config",
             description="Description package with robot URDF/XACRO files. Usually the argument \
         is not set, it enables use of a custom description.",
         )
@@ -278,6 +283,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_file",
+            #default_value="ur.urdf.xacro",
             default_value="pick_robot.urdf.xacro",
             description="URDF/XACRO description file with the robot.",
         )
@@ -293,7 +299,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "moveit_config_file",
-            default_value="pick_robot.srdf",
+            default_value="my_ur5e.srdf",
             description="MoveIt SRDF/XACRO description file with the robot.",
         )
     )
@@ -341,7 +347,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument("launch_servo", default_value="true", description="Launch Servo?")
     )
-    '''
+    
     declared_arguments.append(
         DeclareLaunchArgument(
             "ur_description_package",
@@ -350,6 +356,6 @@ def generate_launch_description():
         is not set, it enables use of a custom description.",
         )
     )
-    '''
+
     return LaunchDescription(declared_arguments + [OpaqueFunction(function=launch_setup)])
 

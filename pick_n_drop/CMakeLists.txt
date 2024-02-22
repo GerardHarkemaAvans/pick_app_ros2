@@ -96,10 +96,24 @@ macro(app_add_node_ros3 node_name node_src1 node_src2 node_src3)
 
 endmacro()
 
-app_add_node_ros3(pick_n_drop_node 
+macro(app_add_node_ros4 node_name node_src1 node_src2 node_src3 node_src4)
+  add_executable("${node_name}" "${node_src1}" "${node_src2}" "${node_src3}" "${node_src4}")
+
+  target_link_libraries("${node_name}"
+                        opencv_imgproc
+                        opencv_highgui
+                        jsoncpp)
+
+  ament_target_dependencies("${node_name}"
+                            ${dependencies})
+
+endmacro()
+
+app_add_node_ros4(pick_n_drop_node 
                   src/pick_n_drop_app.cpp 
                   src/depthai_class.cpp 
-                  src/ur_control_class.cpp)
+                  src/ur_control_class.cpp
+                  src/object_detection_class.cpp)
 
 
 #install(DIRECTORY params DESTINATION share/${PROJECT_NAME})

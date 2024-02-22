@@ -1,6 +1,7 @@
 #include <cstdio>
 #include "pick_n_drop/depthai_class.hpp"
 #include "pick_n_drop/ur_control_class.hpp"
+#include "pick_n_drop/object_detection_class.hpp"
 
 int main(int argc, char **argv)
 {
@@ -22,6 +23,7 @@ int main(int argc, char **argv)
 
   //DepthaiClass Depthai(app_node);
   UrControlClass UrControl(app_node);
+  ObjectDetectionClass ObjectDetection(app_node);
 
   typedef enum states
   {
@@ -34,6 +36,7 @@ int main(int argc, char **argv)
   } STATES;
 
   STATES state = idle;
+  printf("Start sttae sequencer\n");
 
   //string group_states[] = {"home", "left", "right", "home", "resting", "photo"};
 
@@ -44,36 +47,39 @@ int main(int argc, char **argv)
     switch (state)
     {
       case idle:
-        printf("state: idle");
+        printf("state: idle\n");
         state = start;
         break;
       case start:
-        printf("state: start");
+        printf("state: start\n");
+        state = robot_go_photo_pos;
         break;
       case robot_go_photo_pos:
-        printf("state: robot_go_photo_pos");
+        printf("state: robot_go_photo_pos\n");
 
         UrControl.movePose("photo");
         state = camera_take_pcl_photo;
         break;
       case camera_take_pcl_photo:
-        printf("state: camera_take_pcl_photo");
+        printf("state: camera_take_pcl_photo\n");
         //Depthai.TakePCLPhoto();
         state = robot_go_resting_pos;
         break;
       case robot_go_resting_pos:
-        printf("state: robot_go_resting_pos");
+        printf("state: robot_go_resting_pos\n");
         UrControl.movePose("resting");
         state = end;
         break;
       case end:
-        printf("state: end");
+        printf("state: end\n");
         break_flag = true;
         break;
     }
     if(break_flag) break;
   }
   rclcpp::shutdown();
-
+  
+  printf("Ready\n");
+  
   return 0;
 }
