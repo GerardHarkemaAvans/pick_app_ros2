@@ -8,7 +8,7 @@ int main(int argc, char **argv)
   (void)argc;
   (void)argv;
  
-  printf("Hello pick_n_drop package\n");
+  printf("Hello pick_n_drop node\n");
 
   rclcpp::init(argc, argv);
   auto app_node = rclcpp::Node::make_shared("pick_n_drop_node");
@@ -22,7 +22,7 @@ int main(int argc, char **argv)
       .detach();
 
   //DepthaiClass Depthai(app_node);
-  UrControlClass UrControl(app_node);
+  //UrControlClass UrControl(app_node);
   ObjectDetectionClass ObjectDetection(app_node);
 
   typedef enum states
@@ -36,7 +36,7 @@ int main(int argc, char **argv)
   } STATES;
 
   STATES state = idle;
-  printf("Start sttae sequencer\n");
+  printf("Start state sequencer\n");
 
   //string group_states[] = {"home", "left", "right", "home", "resting", "photo"};
 
@@ -47,8 +47,9 @@ int main(int argc, char **argv)
     switch (state)
     {
       case idle:
-        printf("state: idle\n");
-        state = start;
+        //printf("state: idle\n");
+        ObjectDetection.getNearestObjectPosition();
+        //state = start;
         break;
       case start:
         printf("state: start\n");
@@ -57,7 +58,7 @@ int main(int argc, char **argv)
       case robot_go_photo_pos:
         printf("state: robot_go_photo_pos\n");
 
-        UrControl.movePose("photo");
+        //UrControl.movePose("photo");
         state = camera_take_pcl_photo;
         break;
       case camera_take_pcl_photo:
@@ -67,7 +68,7 @@ int main(int argc, char **argv)
         break;
       case robot_go_resting_pos:
         printf("state: robot_go_resting_pos\n");
-        UrControl.movePose("resting");
+        //UrControl.movePose("resting");
         state = end;
         break;
       case end:
@@ -76,6 +77,7 @@ int main(int argc, char **argv)
         break;
     }
     if(break_flag) break;
+    //rclcpp::sleep_for(1000ms);
   }
   rclcpp::shutdown();
   

@@ -43,6 +43,7 @@ set(dependencies
   camera_info_manager
   cv_bridge
   rclcpp
+  rclpy
   sensor_msgs
   stereo_msgs
   std_msgs
@@ -121,18 +122,20 @@ app_add_node_ros4(pick_n_drop_node
 #install(DIRECTORY resources DESTINATION share/${PROJECT_NAME})
 install(DIRECTORY launch/ DESTINATION share/${PROJECT_NAME}/launch)
 # Install Python modules
-#ament_python_install_package(${PROJECT_NAME})
-#install(DIRECTORY scripts/ DESTINATION share/${PROJECT_NAME}/scripts)
+ament_python_install_package(${PROJECT_NAME})
+#install(DIRECTORY pick_n_drop/ DESTINATION share/${PROJECT_NAME}/pick_n_drop)
 #FILES_MATCHING PATTERN "*.py")
+
+
 
 install(TARGETS
         pick_n_drop_node
         DESTINATION lib/${PROJECT_NAME})
 
 
-
 install(PROGRAMS
         #scripts/publisch_bouding_boxes.py
+        scripts/publisch_dummy_detections.py
         DESTINATION lib/${PROJECT_NAME})
 
 

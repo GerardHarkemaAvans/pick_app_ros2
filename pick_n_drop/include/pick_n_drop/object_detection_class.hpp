@@ -13,6 +13,8 @@ using std::placeholders::_1;
 #include "sensor_msgs/msg/image.hpp"
 #include "depthai_ros_msgs/msg/spatial_detection_array.hpp"
 //#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include "geometry_msgs/msg/point.hpp"
+
 
 
 #include "tf2/exceptions.h"
@@ -32,12 +34,13 @@ class ObjectDetectionClass
   std::shared_ptr<rclcpp::Node> _node;
   public:
     ObjectDetectionClass(std::shared_ptr<rclcpp::Node> node);
+    geometry_msgs::msg::Point getNearestObjectPosition();
   private:
 
     rclcpp::Subscription<depthai_ros_msgs::msg::SpatialDetectionArray>::SharedPtr detections_subscription_;
     void detections_callback(depthai_ros_msgs::msg::SpatialDetectionArray::SharedPtr msg) const;
     depthai_ros_msgs::msg::SpatialDetectionArray::SharedPtr detections;
-    mutable  depthai_ros_msgs::msg::SpatialDetectionArray::SharedPtr detections_;
+    mutable  depthai_ros_msgs::msg::SpatialDetectionArray::SharedPtr detections_ = nullptr;
 };
 
 #endif
