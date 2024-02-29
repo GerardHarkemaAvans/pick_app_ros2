@@ -59,6 +59,9 @@ int main(int argc, char **argv)
 
   bool break_flag = false;
 
+  geometry_msgs::msg::TransformStamped transform;
+  std::string class_name;
+
   for (;;)
   {
     switch (state)
@@ -79,7 +82,9 @@ int main(int argc, char **argv)
         break;
       case camera_detect_objects:
         printf("state: camera_detect_objects\n");
-        if(ObjectDetection.getNearestObjectPosition()){
+
+        if(ObjectDetection.getNearestObjectPosition(transform, class_name)){
+          std::cout << " Class found: " << class_name << std::endl;
           state = robot_go_picking_pos;
         }
         else{

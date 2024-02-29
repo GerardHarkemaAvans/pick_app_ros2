@@ -29,7 +29,7 @@ class ObjectDetectionClass
   std::shared_ptr<rclcpp::Node> _node;
   public:
     ObjectDetectionClass(std::shared_ptr<rclcpp::Node> node, std::string nn_config);
-    bool getNearestObjectPosition();
+    bool getNearestObjectPosition(geometry_msgs::msg::TransformStamped &transform, std::string &class_name);
   private:
 
     rclcpp::Subscription<depthai_ros_msgs::msg::SpatialDetectionArray>::SharedPtr detections_subscription_;

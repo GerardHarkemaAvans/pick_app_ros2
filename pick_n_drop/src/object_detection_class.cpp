@@ -40,8 +40,8 @@ void ObjectDetectionClass::detections_callback(depthai_ros_msgs::msg::SpatialDet
 }
 
 //geometry_msgs::msg::TransformStamped  
-bool ObjectDetectionClass::getNearestObjectPosition(){
-      geometry_msgs::msg::TransformStamped transform;
+bool ObjectDetectionClass::getNearestObjectPosition(geometry_msgs::msg::TransformStamped &transform, std::string &class_name){
+      //geometry_msgs::msg::TransformStamped transform;
 
       bool found = false;
       // detection shold not be older than 3 seconds
@@ -63,6 +63,8 @@ bool ObjectDetectionClass::getNearestObjectPosition(){
                         //RCLCPP_INFO(_node->get_logger(), "I current z position: %f", it->position.z);
                   }
                   RCLCPP_INFO(_node->get_logger(), "Nearest z position: %f",nearest_detection->position.z);
+
+                  class_name = class_names[std::stoi(nearest_detection->results[0].class_id)];
 
                   transform.header.stamp = _node->now();
                   transform.header.frame_id = "oak_rgb_camera_optical_frame";
