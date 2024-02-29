@@ -36,6 +36,8 @@ class ObjectDetectionClass
     void detections_callback(depthai_ros_msgs::msg::SpatialDetectionArray::SharedPtr msg) const;
     mutable  depthai_ros_msgs::msg::SpatialDetectionArray::SharedPtr detections_array = nullptr;
     tf2_ros::TransformBroadcaster tf_broadcaster;
+    int NumClasses;
+    std::vector<std::string> class_names;
 };
 
 #endif

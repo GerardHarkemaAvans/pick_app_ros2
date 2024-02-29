@@ -18,8 +18,18 @@ ObjectDetectionClass::ObjectDetectionClass(std::shared_ptr<rclcpp::Node> node, s
       Json::Value completeJsonData;
       // reader reads the data and stores it in completeJsonData
       reader.parse(file, completeJsonData);
-      int NumClasses = std::stoi(completeJsonData["nn_config"]["NN_specific_metadata"]["classes"].asString());
+      NumClasses = std::stoi(completeJsonData["nn_config"]["NN_specific_metadata"]["classes"].asString());
       printf(" Number of classes %i\n", NumClasses);
+
+      Json::Value labelsArray = completeJsonData["mappings"]["labels"];
+      std::cout << "Labels: ";
+      for (const auto& label : labelsArray) {
+            std::string labelName = label.asString();
+            class_names.push_back(labelName);
+            std::cout << labelName << " ";
+      }
+      std::cout << std::endl;
+
 
 }
 
