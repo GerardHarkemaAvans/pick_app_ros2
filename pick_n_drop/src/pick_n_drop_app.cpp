@@ -10,8 +10,20 @@ int main(int argc, char **argv)
  
   printf("Hello pick_n_drop node\n");
 
+
   rclcpp::init(argc, argv);
   auto app_node = rclcpp::Node::make_shared("pick_n_drop_node");
+
+
+  std::string resourceBaseFolder, nnPath, nnConfigPath, nnConfig;
+  app_node->declare_parameter("nnConfig", "");
+  app_node->declare_parameter("resourceBaseFolder", "");
+
+  app_node->get_parameter("nnConfig", nnConfig);
+  app_node->get_parameter("resourceBaseFolder", resourceBaseFolder);
+
+  nnConfigPath = resourceBaseFolder + "/" + nnConfig;
+  std::cout << " Path config: " << nnConfigPath <<std::endl;
 
   // We spin up a SingleThreadedExecutor for the current state monitor to get information
   // about the robot's state.
@@ -22,8 +34,12 @@ int main(int argc, char **argv)
       .detach();
 
   //DepthaiClass Depthai(app_node);
+
+
+
+
   UrControlClass UrControl(app_node);
-  ObjectDetectionClass ObjectDetection(app_node);
+  ObjectDetectionClass ObjectDetection(app_node, nnConfigPath);
 
   typedef enum states
   {

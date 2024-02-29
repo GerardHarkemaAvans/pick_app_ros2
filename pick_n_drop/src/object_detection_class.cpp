@@ -4,12 +4,22 @@ using std::placeholders::_1;
 #include "pick_n_drop/object_detection_class.hpp"
 
 
-ObjectDetectionClass::ObjectDetectionClass(std::shared_ptr<rclcpp::Node> node) : _node(node), tf_broadcaster(_node)
+
+ObjectDetectionClass::ObjectDetectionClass(std::shared_ptr<rclcpp::Node> node, std::string nn_config) : _node(node), tf_broadcaster(_node)
 {
       printf("ObjectDetectionClass constructor\n");
 
       detections_subscription_ = node->create_subscription<depthai_ros_msgs::msg::SpatialDetectionArray>("DummyDetections", 10, std::bind(&ObjectDetectionClass::detections_callback, this, std::placeholders::_1));
-      //tf_broadcaster = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
+
+      std::ifstream file(nn_config);
+      // json reader
+      Json::Reader reader;
+      // this will contain complete JSON data
+      Json::Value completeJsonData;
+      // reader reads the data and stores it in completeJsonData
+      reader.parse(file, completeJsonData);
+      int NumClasses = std::stoi(completeJsonData["nn_config"]["NN_specific_metadata"]["classes"].asString());
+      printf(" Number of classes %i\n", NumClasses);
 
 }
 

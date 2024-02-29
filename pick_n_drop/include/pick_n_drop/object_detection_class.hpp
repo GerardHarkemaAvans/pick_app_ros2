@@ -3,6 +3,8 @@
 #define OBJECT_DETECTION_CLASS
 
 #include <memory>
+#include <fstream>
+#include <string>
 
 #include "rclcpp/rclcpp.hpp"
 //#include "rclcpp/executors.hpp"
@@ -15,7 +17,7 @@ using std::placeholders::_1;
 #include "geometry_msgs/msg/point.hpp"
 #include "geometry_msgs/msg/transform_stamped.hpp"
 #include "tf2_ros/transform_broadcaster.h"
-
+#include "jsoncpp/json/json.h"
 
 
 using namespace std::chrono_literals;
@@ -26,7 +28,7 @@ class ObjectDetectionClass
 {
   std::shared_ptr<rclcpp::Node> _node;
   public:
-    ObjectDetectionClass(std::shared_ptr<rclcpp::Node> node);
+    ObjectDetectionClass(std::shared_ptr<rclcpp::Node> node, std::string nn_config);
     bool getNearestObjectPosition();
   private:
 

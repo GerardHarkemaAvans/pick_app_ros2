@@ -63,6 +63,14 @@ def launch_setup(context, *args, **kwargs):
     use_sim_time = LaunchConfiguration("use_sim_time")
     launch_rviz = LaunchConfiguration("launch_rviz")
     launch_servo = LaunchConfiguration("launch_servo")
+
+    depthai_examples_path = get_package_share_directory('my_depthai_ros2')
+    default_resources_path = os.path.join(depthai_examples_path,
+                                'resources')
+
+    nnConfig             = LaunchConfiguration('nnConfig', default = "SimpleFruitsv1iyolov5pytorch.json")
+    resourceBaseFolder  = LaunchConfiguration('resourceBaseFolder', default = default_resources_path)
+
     #ur_description_package = LaunchConfiguration("ur_description_package")
 
     '''
@@ -214,6 +222,8 @@ def launch_setup(context, *args, **kwargs):
         parameters=[
             robot_description,
             robot_description_semantic,
+            {'nnConfig': nnConfig},
+            {'resourceBaseFolder': resourceBaseFolder},
             #robot_description_kinematics,
             #robot_description_planning,
             #ompl_planning_pipeline_config,
