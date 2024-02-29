@@ -44,6 +44,9 @@ set(dependencies
   cv_bridge
   rclcpp
   rclpy
+  geometry_msgs
+  tf2
+  tf2_ros
   sensor_msgs
   stereo_msgs
   std_msgs
@@ -117,15 +120,10 @@ app_add_node_ros4(pick_n_drop_node
                   src/object_detection_class.cpp)
 
 
-#install(DIRECTORY params DESTINATION share/${PROJECT_NAME})
-#install(DIRECTORY rviz DESTINATION share/${PROJECT_NAME})
-#install(DIRECTORY resources DESTINATION share/${PROJECT_NAME})
+
 install(DIRECTORY launch/ DESTINATION share/${PROJECT_NAME}/launch)
 # Install Python modules
 ament_python_install_package(${PROJECT_NAME})
-#install(DIRECTORY pick_n_drop/ DESTINATION share/${PROJECT_NAME}/pick_n_drop)
-#FILES_MATCHING PATTERN "*.py")
-
 
 
 install(TARGETS

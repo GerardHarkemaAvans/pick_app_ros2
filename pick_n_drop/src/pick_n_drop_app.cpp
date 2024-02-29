@@ -22,7 +22,7 @@ int main(int argc, char **argv)
       .detach();
 
   //DepthaiClass Depthai(app_node);
-  //UrControlClass UrControl(app_node);
+  UrControlClass UrControl(app_node);
   ObjectDetectionClass ObjectDetection(app_node);
 
   typedef enum states
@@ -30,7 +30,8 @@ int main(int argc, char **argv)
     idle,
     start,
     robot_go_photo_pos,
-    camera_take_pcl_photo,
+    camera_detect_objects,
+    robot_go_picking_pos,
     robot_go_resting_pos,
     end,
   } STATES;
@@ -38,7 +39,7 @@ int main(int argc, char **argv)
   STATES state = idle;
   printf("Start state sequencer\n");
 
-  //string group_states[] = {"home", "left", "right", "home", "resting", "photo"};
+  //string group_states[] = {"home", "left", "right", "home", "resting", "photo", "robot_go_picking_pos"};
 
   bool break_flag = false;
 
@@ -47,9 +48,8 @@ int main(int argc, char **argv)
     switch (state)
     {
       case idle:
-        //printf("state: idle\n");
-        ObjectDetection.getNearestObjectPosition();
-        //state = start;
+        printf("state: idle\n");
+        state = start;
         break;
       case start:
         printf("state: start\n");
@@ -58,17 +58,28 @@ int main(int argc, char **argv)
       case robot_go_photo_pos:
         printf("state: robot_go_photo_pos\n");
 
-        //UrControl.movePose("photo");
-        state = camera_take_pcl_photo;
+        UrControl.movePose("photo");
+        state = camera_detect_objects;
         break;
-      case camera_take_pcl_photo:
-        printf("state: camera_take_pcl_photo\n");
+      case camera_detect_objects:
+        printf("state: camera_detect_objects\n");
+        if(ObjectDetection.getNearestObjectPosition()){
+          state = robot_go_picking_pos;
+        }
+        else{
+          state = robot_go_resting_pos;
+        }
         //Depthai.TakePCLPhoto();
+        break;
+      case robot_go_picking_pos:
+        printf("state: robot_go_picking_pos\n");
+        fflush(stdout);
+        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
         state = robot_go_resting_pos;
         break;
       case robot_go_resting_pos:
         printf("state: robot_go_resting_pos\n");
-        //UrControl.movePose("resting");
+        UrControl.movePose("resting");
         state = end;
         break;
       case end:

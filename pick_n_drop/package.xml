@@ -23,6 +23,9 @@
   <depend>std_msgs</depend>
   <depend>stereo_msgs</depend>
   <depend>vision_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>tf2</depend>
+  <depend>tf2_ros</depend>
   #<depend>foxglove_msgs</depend>
   <depend>rviz_imu_plugin</depend>
   <depend>pcl_1.10</depend>

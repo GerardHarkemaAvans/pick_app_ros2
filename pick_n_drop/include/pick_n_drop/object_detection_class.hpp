@@ -18,11 +18,6 @@ using std::placeholders::_1;
 
 
 
-//#include "tf2/exceptions.h"
-//#include "tf2_ros/transform_listener.h"
-//#include "tf2_ros/buffer.h"
-
-
 using namespace std::chrono_literals;
 
 
@@ -32,13 +27,13 @@ class ObjectDetectionClass
   std::shared_ptr<rclcpp::Node> _node;
   public:
     ObjectDetectionClass(std::shared_ptr<rclcpp::Node> node);
-    geometry_msgs::msg::TransformStamped getNearestObjectPosition();
+    bool getNearestObjectPosition();
   private:
 
     rclcpp::Subscription<depthai_ros_msgs::msg::SpatialDetectionArray>::SharedPtr detections_subscription_;
     void detections_callback(depthai_ros_msgs::msg::SpatialDetectionArray::SharedPtr msg) const;
     mutable  depthai_ros_msgs::msg::SpatialDetectionArray::SharedPtr detections_array = nullptr;
-    std::unique_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster;
+    tf2_ros::TransformBroadcaster tf_broadcaster;
 };
 
 #endif
