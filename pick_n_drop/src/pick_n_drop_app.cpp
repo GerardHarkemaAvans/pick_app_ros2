@@ -95,6 +95,7 @@ int main(int argc, char **argv)
       case robot_go_picking_pos:
         printf("state: robot_go_picking_pos\n");
         fflush(stdout);
+        UrControl.moveFrame(transform);
         std::this_thread::sleep_for(std::chrono::milliseconds(5000));
         state = robot_go_resting_pos;
         break;

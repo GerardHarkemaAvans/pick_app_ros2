@@ -9,7 +9,9 @@ ObjectDetectionClass::ObjectDetectionClass(std::shared_ptr<rclcpp::Node> node, s
 {
       printf("ObjectDetectionClass constructor\n");
 
-      detections_subscription_ = node->create_subscription<depthai_ros_msgs::msg::SpatialDetectionArray>("DummyDetections", 10, std::bind(&ObjectDetectionClass::detections_callback, this, std::placeholders::_1));
+
+      //detections_subscription_ = node->create_subscription<depthai_ros_msgs::msg::SpatialDetectionArray>("DummyDetections", 10, std::bind(&ObjectDetectionClass::detections_callback, this, std::placeholders::_1));
+      detections_subscription_ = node->create_subscription<depthai_ros_msgs::msg::SpatialDetectionArray>("color/yolov4_spatial_detections", 10, std::bind(&ObjectDetectionClass::detections_callback, this, std::placeholders::_1));
 
       std::ifstream file(nn_config);
       // json reader
