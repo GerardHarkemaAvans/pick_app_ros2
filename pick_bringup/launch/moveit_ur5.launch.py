@@ -73,54 +73,65 @@ def launch_setup(context, *args, **kwargs):
     visual_params = PathJoinSubstitution(
         [FindPackageShare(description_package), "config", ur_type, "visual_parameters.yaml"]
     )
+    if 0:
+        robot_description_content = Command(
+            [
+                PathJoinSubstitution([FindExecutable(name="xacro")]),
+                " ",
+                PathJoinSubstitution([FindPackageShare(description_package), "urdf", description_file]),
+                " ",
+                "robot_ip:=xxx.yyy.zzz.www",
+                " ",
+                "joint_limit_params:=",
+                joint_limit_params,
+                " ",
+                "kinematics_params:=",
+                kinematics_params,
+                " ",
+                "physical_params:=",
+                physical_params,
+                " ",
+                "visual_params:=",
+                visual_params,
+                " ",
+                "safety_limits:=",
+                safety_limits,
+                " ",
+                "safety_pos_margin:=",
+                safety_pos_margin,
+                " ",
+                "safety_k_position:=",
+                safety_k_position,
+                " ",
+                "name:=",
+                "ur",
+                " ",
+                "ur_type:=",
+                ur_type,
+                " ",
+                "script_filename:=ros_control.urscript",
+                " ",
+                "input_recipe_filename:=rtde_input_recipe.txt",
+                " ",
+                "output_recipe_filename:=rtde_output_recipe.txt",
+                " ",
+                "prefix:=",
+                prefix,
+                " ",
+            ]
+        )
+        robot_description = {"pick_robot_description": robot_description_content}
 
-    robot_description_content = Command(
+    else:
+        robot_description_content = Command(
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
             PathJoinSubstitution([FindPackageShare(description_package), "urdf", description_file]),
             " ",
-            "robot_ip:=xxx.yyy.zzz.www",
-            " ",
-            "joint_limit_params:=",
-            joint_limit_params,
-            " ",
-            "kinematics_params:=",
-            kinematics_params,
-            " ",
-            "physical_params:=",
-            physical_params,
-            " ",
-            "visual_params:=",
-            visual_params,
-            " ",
-            "safety_limits:=",
-            safety_limits,
-            " ",
-            "safety_pos_margin:=",
-            safety_pos_margin,
-            " ",
-            "safety_k_position:=",
-            safety_k_position,
-            " ",
-            "name:=",
-            "ur",
-            " ",
-            "ur_type:=",
-            ur_type,
-            " ",
-            "script_filename:=ros_control.urscript",
-            " ",
-            "input_recipe_filename:=rtde_input_recipe.txt",
-            " ",
-            "output_recipe_filename:=rtde_output_recipe.txt",
-            " ",
-            "prefix:=",
-            prefix,
-            " ",
         ]
     )
-    robot_description = {"pick_robot_description": robot_description_content}
+    robot_description = {"robot_description": robot_description_content}
 
     # MoveIt Configuration
     if 0:
@@ -155,7 +166,7 @@ def launch_setup(context, *args, **kwargs):
 
 
     robot_description_kinematics = PathJoinSubstitution(
-        [FindPackageShare(moveit_config_package), "config", "kinematics.yaml"]
+        [FindPackageShare(moveit_config_package), "config", "ur_config", "kinematics.yaml"]
     )
 
     # robot_description_planning = {
@@ -170,11 +181,11 @@ def launch_setup(context, *args, **kwargs):
             "start_state_max_bounds_error": 0.1,
         }
     }
-    ompl_planning_yaml = load_yaml("pick_moveit_config", "config/ompl_planning.yaml")
+    ompl_planning_yaml = load_yaml("pick_moveit_config", "config/ur_config/ompl_planning.yaml")
     ompl_planning_pipeline_config["move_group"].update(ompl_planning_yaml)
 
     # Trajectory Execution Configuration
-    controllers_yaml = load_yaml("pick_moveit_config", "config/controllers.yaml")
+    controllers_yaml = load_yaml("pick_moveit_config", "config/ur_config/controllers.yaml")
     # the scaled_joint_trajectory_controller does not work on fake hardware
     change_controllers = context.perform_substitution(use_fake_hardware)
     if change_controllers == "true":
@@ -246,7 +257,7 @@ def launch_setup(context, *args, **kwargs):
     )
 
     # Servo node for realtime control
-    servo_yaml = load_yaml("pick_moveit_config", "config/ur_servo.yaml")
+    servo_yaml = load_yaml("pick_moveit_config", "config/ur_config/ur_servo.yaml")
     servo_params = {"moveit_servo": servo_yaml}
     servo_node = Node(
         package="moveit_servo",
@@ -262,6 +273,7 @@ def launch_setup(context, *args, **kwargs):
 
     nodes_to_start = [move_group_node, rviz_node, servo_node]
 
+
     return nodes_to_start
 
 
@@ -274,7 +286,7 @@ def generate_launch_description():
             "ur_type",
             description="Type/series of used UR robot.",
             default_value="ur5e",
-            choices=["ur3", "ur3e", "ur5", "ur5e", "ur10", "ur10e", "ur16e", "ur20"],
+            choices=["ur3", "ur5", "ur5e"],
         )
     )
     declared_arguments.append(
