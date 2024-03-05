@@ -1,4 +1,5 @@
 #include <memory>
+#include <chrono>
 
 #include "rclcpp/rclcpp.hpp"
 // #include "rclcpp/executors.hpp"
@@ -24,6 +25,10 @@ UrControlClass::UrControlClass(std::shared_ptr<rclcpp::Node> node) : _node(node)
       // moveit::planning_interface::MoveGroupInterface move_group(node, PLANNING_GROUP);
       //ros::WallDuration wallDuration(waitingTime, 300);
       //move_group = new moveit::planning_interface::MoveGroupInterface(node, PLANNING_GROUP, wallDuration);
+
+      tf_buffer_ = std::make_unique<tf2_ros::Buffer>(node->get_clock());
+      tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
+
       printf("Ready move group\n");
 }
 
@@ -82,13 +87,44 @@ int UrControlClass::moveFrame(geometry_msgs::msg::TransformStamped transform){
       std::cout << transform.header.frame_id << std::endl;
 
       geometry_msgs::msg::Pose target_pose1;
-      target_pose1.orientation.w = 1.0;
-      target_pose1.position.x = 0.28;
-      target_pose1.position.y = -0.2;
-      target_pose1.position.z = 0.5;
-      move_group->setPoseTarget(target_pose1);
-      move_group->move();
 
+      // Store frame names in variables that will be used to
+      // compute transformations
+      std::string fromFrameRel = "robot_base_link";
+      std::string toFrameRel = "nearest_object";
+
+
+      geometry_msgs::msg::TransformStamped t;
+
+      // Look up for the transformation between target_frame and turtle2 frames
+      // and send velocity commands for turtle2 to reach target_frame
+      try {
+            t = tf_buffer_->lookupTransform(
+            toFrameRel, fromFrameRel,
+            tf2::TimePointZero);
+      } catch (const tf2::TransformException & ex) {
+            RCLCPP_INFO(
+            _node->get_logger(), "Could not transform %s to %s: %s",
+            toFrameRel.c_str(), fromFrameRel.c_str(), ex.what());
+            return 0;
+      }
+
+      tf2::Quaternion myQuaternion;
+
+      myQuaternion.setRPY(3.14 ,0, 0);
+
+      myQuaternion=myQuaternion.normalize();
+
+      target_pose1.orientation.x = myQuaternion.x();
+      target_pose1.orientation.y = myQuaternion.y();
+      target_pose1.orientation.z = myQuaternion.z();
+      target_pose1.orientation.w = myQuaternion.w();
+      target_pose1.position.x = t.transform.translation.x;
+      target_pose1.position.y = t.transform.translation.y;
+      target_pose1.position.z = t.transform.translation.z;
+      move_group->setPoseTarget(target_pose1);
+      //move_group->plan();
+      move_group->move();
 
       return 0;
     }
