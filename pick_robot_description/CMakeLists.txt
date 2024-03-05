@@ -4,7 +4,7 @@ project(pick_robot_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY launch rviz urdf 
+  DIRECTORY config launch rviz urdf 
   DESTINATION share/${PROJECT_NAME}
 )
 

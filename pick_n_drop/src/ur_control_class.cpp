@@ -22,8 +22,8 @@ UrControlClass::UrControlClass(std::shared_ptr<rclcpp::Node> node) : _node(node)
       // :moveit_codedir:`MoveGroupInterface<moveit_ros/planning_interface/move_group_interface/include/moveit/move_group_interface/move_group_interface.h>`
       // class can be easily set up using just the name of the planning group you would like to control and plan for.
       // moveit::planning_interface::MoveGroupInterface move_group(node, PLANNING_GROUP);
-      ros::WallDuration wallDuration(waitingTime, 300);
-      move_group = new moveit::planning_interface::MoveGroupInterface(node, PLANNING_GROUP, wallDuration);
+      //ros::WallDuration wallDuration(waitingTime, 300);
+      //move_group = new moveit::planning_interface::MoveGroupInterface(node, PLANNING_GROUP, wallDuration);
       printf("Ready move group\n");
 }
 
