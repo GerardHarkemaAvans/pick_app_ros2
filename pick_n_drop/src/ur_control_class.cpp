@@ -38,6 +38,7 @@ int UrControlClass::movePose(const char *Posename)
 
       moveit_msgs::msg::Constraints constraints;
       std::map<std::string, double>::iterator it = target.begin();
+
       while (it != target.end())
       {
             moveit_msgs::msg::JointConstraint joint_constraint;
@@ -48,8 +49,8 @@ int UrControlClass::movePose(const char *Posename)
 
             // the bound to be achieved is [position - tolerance_below, position + tolerance_above]
             joint_constraint.position = it->second;
-            joint_constraint.tolerance_above = 0.1;
-            joint_constraint.tolerance_below = 0.1;
+            joint_constraint.tolerance_above = 0.3;
+            joint_constraint.tolerance_below = 0.3;
 
             // A weighting factor for this constraint (denotes relative importance to other constraints. Closer to zero means less important)
             joint_constraint.weight = 1.0;
@@ -59,20 +60,47 @@ int UrControlClass::movePose(const char *Posename)
             it++;
       }
 
-      move_group->setJointValueTarget(target);
-      move_group->setPlanningTime(10.0);
 
-      move_group->setPathConstraints(constraints);
+      //move_group->setJointValueTarget(target);
+      //move_group->setPlanningTime(100.0);
+      //move_group->setNumPlanningAttempts (10);
 
+      //move_group->setPathConstraints(constraints);
+
+      //move_group->move();
+
+      move_group->setJointValueTarget(move_group->getNamedTargetValues(Posename));
+      
+      moveit::planning_interface::MoveGroupInterface::Plan my_plan_arm;
+
+      bool success = (move_group->plan(my_plan_arm) == moveit::core::MoveItErrorCode::SUCCESS);
+      if (success)
+      {
+            printf("Execute plan\n");
+            move_group->move();
+      }
+      else{
+            printf("Faild to create plan\n");
+      }
+
+
+
+
+#if 0
       moveit::planning_interface::MoveGroupInterface::Plan my_plan;
 
       bool succes = (move_group->plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
       if (succes)
       {
-            // printf("Execute\n");
+            printf("Execute plan\n");
             move_group->execute(my_plan);
             // move_group->asyncExecute(my_plan);
       }
+      else{
+            printf("Faild to create plan\n");
+
+      }
+#endif
       return 0;
 }
 
@@ -113,7 +141,7 @@ int UrControlClass::moveFrame(geometry_msgs::msg::TransformStamped transform){
       target_pose1.orientation.w = myQuaternion.w();
       target_pose1.position.x = t.transform.translation.x;
       target_pose1.position.y = t.transform.translation.y;
-      target_pose1.position.z = t.transform.translation.z;
+      target_pose1.position.z = t.transform.translation.z+0.05;
       move_group->setPoseTarget(target_pose1);
       //move_group->plan();
       move_group->move();

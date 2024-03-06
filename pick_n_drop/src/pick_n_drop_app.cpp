@@ -81,8 +81,8 @@ int main(int argc, char **argv)
         printf("state: camera_detect_objects\n");
 
         if(ObjectDetection.getNearestObjectPosition(transform, class_name)){
-          std::cout << " Class found: " << class_name << std::endl;
-          state = robot_go_picking_pos;
+          std::cout << "Class found: " << class_name << std::endl;
+          //state = robot_go_picking_pos;
           state = robot_go_resting_pos;
         }
         else{
