@@ -63,226 +63,37 @@ Visualization Manager:
         History Policy: Keep Last
         Reliability Policy: Reliable
         Value: /robot_description
-      Enabled: true
+      Enabled: false
       Links:
         All Links Enabled: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        arrow_tcp:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        base_link_inertia:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        baseplate_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        beugel_camera:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        beugel_camera_pre:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        beugel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        beugel_link_mesh:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        beugel_tool:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        flange:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        forearm_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        ft_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        mountingplate_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        oak-d_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_imu_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_left_camera_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_left_camera_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_model_origin:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        oak_rgb_camera_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_rgb_camera_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_right_camera_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_right_camera_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        pick_tcp:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        robot_base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        shoulder_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        tool0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        upper_arm_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        world:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        wrist_1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wrist_2_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wrist_3_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
       Mass Properties:
         Inertia: false
         Mass: false
       Name: RobotModel
       TF Prefix: ""
       Update Interval: 0
-      Value: true
+      Value: false
       Visual Enabled: true
     - Class: rviz_default_plugins/TF
       Enabled: true
       Frame Timeout: 10
       Frames:
         All Enabled: false
-        apple_0:
-          Value: false
-        arrow_tcp:
-          Value: true
-        banana_0:
-          Value: false
-        banana_1:
-          Value: false
-        banana_2:
-          Value: false
         base:
           Value: false
         base_link:
           Value: true
         base_link_inertia:
           Value: false
-        baseplate_link:
-          Value: false
-        beugel_camera:
-          Value: false
-        beugel_camera_pre:
-          Value: false
-        beugel_link:
-          Value: false
-        beugel_link_mesh:
-          Value: false
-        beugel_tool:
-          Value: false
         flange:
           Value: false
         forearm_link:
           Value: false
         ft_frame:
-          Value: false
-        mountingplate_link:
-          Value: false
-        nearest_object:
-          Value: true
-        oak-d_frame:
-          Value: false
-        oak_imu_frame:
-          Value: false
-        oak_left_camera_frame:
-          Value: false
-        oak_left_camera_optical_frame:
-          Value: false
-        oak_model_origin:
-          Value: false
-        oak_rgb_camera_frame:
-          Value: false
-        oak_rgb_camera_optical_frame:
-          Value: false
-        oak_right_camera_frame:
-          Value: false
-        oak_right_camera_optical_frame:
-          Value: false
-        orange_0:
-          Value: false
-        pick_tcp:
-          Value: false
-        robot_base_link:
           Value: false
         shoulder_link:
           Value: false
@@ -305,57 +116,21 @@ Visualization Manager:
       Show Names: true
       Tree:
         world:
-          baseplate_link:
-            mountingplate_link:
-              robot_base_link:
-                base_link:
-                  base:
-                    {}
-                  base_link_inertia:
-                    shoulder_link:
-                      upper_arm_link:
-                        forearm_link:
-                          wrist_1_link:
-                            wrist_2_link:
-                              wrist_3_link:
-                                flange:
-                                  tool0:
-                                    beugel_link:
-                                      beugel_camera_pre:
-                                        beugel_camera:
-                                          oak-d_frame:
-                                            oak_imu_frame:
-                                              {}
-                                            oak_left_camera_frame:
-                                              oak_left_camera_optical_frame:
-                                                {}
-                                            oak_model_origin:
-                                              {}
-                                            oak_rgb_camera_frame:
-                                              oak_rgb_camera_optical_frame:
-                                                apple_0:
-                                                  {}
-                                                banana_0:
-                                                  {}
-                                                banana_1:
-                                                  {}
-                                                banana_2:
-                                                  {}
-                                                nearest_object:
-                                                  {}
-                                                orange_0:
-                                                  {}
-                                            oak_right_camera_frame:
-                                              oak_right_camera_optical_frame:
-                                                {}
-                                      beugel_link_mesh:
-                                        arrow_tcp:
-                                          pick_tcp:
-                                            {}
-                                      beugel_tool:
-                                        {}
-                                ft_frame:
-                                  {}
+          base_link:
+            base:
+              {}
+            base_link_inertia:
+              shoulder_link:
+                upper_arm_link:
+                  forearm_link:
+                    wrist_1_link:
+                      wrist_2_link:
+                        wrist_3_link:
+                          flange:
+                            tool0:
+                              {}
+                          ft_frame:
+                            {}
       Update Interval: 0
       Value: true
     - Acceleration_Scaling_Factor: 0.1
@@ -454,39 +229,11 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          oak_imu_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          oak_left_camera_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          oak_left_camera_optical_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
           oak_model_origin:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          oak_rgb_camera_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          oak_rgb_camera_optical_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          oak_right_camera_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          oak_right_camera_optical_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
           pick_tcp:
             Alpha: 1
             Show Axes: false
@@ -639,39 +386,11 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
-          oak_imu_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          oak_left_camera_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          oak_left_camera_optical_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
           oak_model_origin:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
-          oak_rgb_camera_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          oak_rgb_camera_optical_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          oak_right_camera_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
-          oak_right_camera_optical_frame:
-            Alpha: 1
-            Show Axes: false
-            Show Trail: false
           pick_tcp:
             Alpha: 1
             Show Axes: false

@@ -62,6 +62,9 @@ int main(int argc, char **argv)
   geometry_msgs::msg::TransformStamped transform;
   std::string class_name;
 
+  UrControl.movePose("home");
+#if 0
+
   for (;;)
   {
     switch (state)
@@ -86,6 +89,7 @@ int main(int argc, char **argv)
         if(ObjectDetection.getNearestObjectPosition(transform, class_name)){
           std::cout << " Class found: " << class_name << std::endl;
           state = robot_go_picking_pos;
+          state = robot_go_resting_pos;
         }
         else{
           state = robot_go_resting_pos;
@@ -112,6 +116,7 @@ int main(int argc, char **argv)
     if(break_flag) break;
     //rclcpp::sleep_for(1000ms);
   }
+  #endif
   rclcpp::shutdown();
   
   printf("Ready\n");

@@ -159,7 +159,6 @@ def launch_setup(context, *args, **kwargs):
                 " ",
             ]
         )
-        robot_description_semantic = {"robot_description_semantic": robot_description_semantic_content}
 
     else:
         # MoveIt Configuration
@@ -242,16 +241,14 @@ def launch_setup(context, *args, **kwargs):
             robot_description_planning,
             ompl_planning_pipeline_config,
             trajectory_execution,
+            moveit_controllers,
             planning_scene_monitor_parameters,
             {"use_sim_time": use_sim_time},
-            #warehouse_ros_config,
+            warehouse_ros_config,
         ],
     )
 
     nodes_to_start = [pick_n_drop_node]    
-    return nodes_to_start
-
-
     return nodes_to_start
 
 
@@ -322,7 +319,6 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "moveit_config_file",
-            #default_value="ur.srdf.xacro",
             default_value="pick_robot.srdf",
             description="MoveIt SRDF/XACRO description file with the robot.",
         )
