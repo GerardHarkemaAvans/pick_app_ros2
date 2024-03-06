@@ -35,9 +35,6 @@ int main(int argc, char **argv)
 
   //DepthaiClass Depthai(app_node);
 
-
-
-
   UrControlClass UrControl(app_node);
   ObjectDetectionClass ObjectDetection(app_node, nnConfigPath);
 
@@ -61,9 +58,6 @@ int main(int argc, char **argv)
 
   geometry_msgs::msg::TransformStamped transform;
   std::string class_name;
-
-  UrControl.movePose("home");
-#if 0
 
   for (;;)
   {
@@ -116,7 +110,6 @@ int main(int argc, char **argv)
     if(break_flag) break;
     //rclcpp::sleep_for(1000ms);
   }
-  #endif
   rclcpp::shutdown();
   
   printf("Ready\n");

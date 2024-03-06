@@ -22,7 +22,7 @@ UrControlClass::UrControlClass(std::shared_ptr<rclcpp::Node> node) : _node(node)
       // The
       // :moveit_codedir:`MoveGroupInterface<moveit_ros/planning_interface/move_group_interface/include/moveit/move_group_interface/move_group_interface.h>`
       // class can be easily set up using just the name of the planning group you would like to control and plan for.
-      moveit::planning_interface::MoveGroupInterface move_group(node, PLANNING_GROUP);
+      move_group = new moveit::planning_interface::MoveGroupInterface(node, PLANNING_GROUP);
 
       tf_buffer_ = std::make_unique<tf2_ros::Buffer>(node->get_clock());
       tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
@@ -32,17 +32,9 @@ UrControlClass::UrControlClass(std::shared_ptr<rclcpp::Node> node) : _node(node)
 
 int UrControlClass::movePose(const char *Posename)
 {
-
       printf("Move to %s\n", Posename);
       std::map<std::string, double> target = move_group->getNamedTargetValues(Posename);
 
-      // We will use the
-      // :moveit_codedir:`PlanningSceneInterface<moveit_ros/planning_interface/planning_scene_interface/include/moveit/planning_scene_interface/planning_scene_interface.h>`
-      // class to add and rem    std::cout << "1" << std::endl;ove collision objects in our "virtual world" scene
-      //  moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
-
-
-#if 0
 
       moveit_msgs::msg::Constraints constraints;
       std::map<std::string, double>::iterator it = target.begin();
@@ -81,7 +73,6 @@ int UrControlClass::movePose(const char *Posename)
             move_group->execute(my_plan);
             // move_group->asyncExecute(my_plan);
       }
-#endif
       return 0;
 }
 
@@ -94,7 +85,6 @@ int UrControlClass::moveFrame(geometry_msgs::msg::TransformStamped transform){
       // compute transformations
       std::string fromFrameRel = "robot_base_link";
       std::string toFrameRel = "nearest_object";
-
 
       geometry_msgs::msg::TransformStamped t;
 

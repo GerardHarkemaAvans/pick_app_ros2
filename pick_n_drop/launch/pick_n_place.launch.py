@@ -172,11 +172,9 @@ def launch_setup(context, *args, **kwargs):
 
     robot_description_kinematics = PathJoinSubstitution(
         [FindPackageShare(moveit_config_package), "config", "ur_config", "kinematics.yaml"]
+        #[FindPackageShare(moveit_config_package), "config", "kinematics.yaml"]
     )
 
-    # robot_description_planning = {
-    # "robot_description_planning": load_yaml_abs(str(joint_limit_params.perform(context)))
-    # }
     robot_description_planning = {
         "robot_description_planning": load_yaml(
             str(moveit_config_package.perform(context)),
@@ -227,6 +225,7 @@ def launch_setup(context, *args, **kwargs):
         "warehouse_host": warehouse_sqlite_path,
     }
 
+
     # Start the actual app node
     pick_n_drop_node = Node(
         package="pick_n_drop",
@@ -248,7 +247,9 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
+
     nodes_to_start = [pick_n_drop_node]    
+    
     return nodes_to_start
 
 
