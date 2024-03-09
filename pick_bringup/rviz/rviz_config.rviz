@@ -83,17 +83,55 @@ Visualization Manager:
       Frame Timeout: 10
       Frames:
         All Enabled: false
+        arrow_tcp:
+          Value: false
         base:
           Value: false
         base_link:
           Value: true
         base_link_inertia:
           Value: false
+        baseplate_link:
+          Value: false
+        beugel_camera:
+          Value: false
+        beugel_camera_pre:
+          Value: false
+        beugel_link:
+          Value: false
+        beugel_link_mesh:
+          Value: false
+        beugel_tool:
+          Value: false
         flange:
           Value: false
         forearm_link:
           Value: false
         ft_frame:
+          Value: false
+        mountingplate_link:
+          Value: false
+        oak-d_frame:
+          Value: false
+        oak_imu_frame:
+          Value: false
+        oak_left_camera_frame:
+          Value: false
+        oak_left_camera_optical_frame:
+          Value: false
+        oak_model_origin:
+          Value: false
+        oak_rgb_camera_frame:
+          Value: false
+        oak_rgb_camera_optical_frame:
+          Value: false
+        oak_right_camera_frame:
+          Value: false
+        oak_right_camera_optical_frame:
+          Value: false
+        pick_tcp:
+          Value: true
+        robot_base_link:
           Value: false
         shoulder_link:
           Value: false
@@ -116,21 +154,46 @@ Visualization Manager:
       Show Names: true
       Tree:
         world:
-          base_link:
-            base:
-              {}
-            base_link_inertia:
-              shoulder_link:
-                upper_arm_link:
-                  forearm_link:
-                    wrist_1_link:
-                      wrist_2_link:
-                        wrist_3_link:
-                          flange:
-                            tool0:
-                              {}
-                          ft_frame:
-                            {}
+          baseplate_link:
+            mountingplate_link:
+              robot_base_link:
+                base_link:
+                  base:
+                    {}
+                  base_link_inertia:
+                    shoulder_link:
+                      upper_arm_link:
+                        forearm_link:
+                          wrist_1_link:
+                            wrist_2_link:
+                              wrist_3_link:
+                                flange:
+                                  tool0:
+                                    beugel_link:
+                                      beugel_camera_pre:
+                                        beugel_camera:
+                                          oak-d_frame:
+                                            oak_imu_frame:
+                                              {}
+                                            oak_left_camera_frame:
+                                              oak_left_camera_optical_frame:
+                                                {}
+                                            oak_model_origin:
+                                              {}
+                                            oak_rgb_camera_frame:
+                                              oak_rgb_camera_optical_frame:
+                                                {}
+                                            oak_right_camera_frame:
+                                              oak_right_camera_optical_frame:
+                                                {}
+                                      beugel_link_mesh:
+                                        arrow_tcp:
+                                          pick_tcp:
+                                            {}
+                                      beugel_tool:
+                                        {}
+                                ft_frame:
+                                  {}
       Update Interval: 0
       Value: true
     - Acceleration_Scaling_Factor: 0.1
@@ -229,11 +292,39 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          oak_imu_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_left_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_left_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           oak_model_origin:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
+          oak_rgb_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_rgb_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_right_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_right_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           pick_tcp:
             Alpha: 1
             Show Axes: false
@@ -386,11 +477,39 @@ Visualization Manager:
             Alpha: 1
             Show Axes: false
             Show Trail: false
+          oak_imu_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_left_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_left_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           oak_model_origin:
             Alpha: 1
             Show Axes: false
             Show Trail: false
             Value: true
+          oak_rgb_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_rgb_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_right_camera_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
+          oak_right_camera_optical_frame:
+            Alpha: 1
+            Show Axes: false
+            Show Trail: false
           pick_tcp:
             Alpha: 1
             Show Axes: false
@@ -567,7 +686,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.7798542976379395
+      Distance: 1.5662717819213867
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -582,10 +701,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.36039820313453674
+      Pitch: 0.5553980469703674
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.720399796962738
+      Yaw: 6.1885833740234375
     Saved: ~
 Window Geometry:
   Camera:

@@ -69,21 +69,24 @@ int main(int argc, char **argv)
         break;
       case start:
         printf("state: start\n");
+        UrControl.movePose("home");
         state = robot_go_photo_pos;
         break;
       case robot_go_photo_pos:
         printf("state: robot_go_photo_pos\n");
 
         UrControl.movePose("photo");
+        //UrControl.movePose("resting");
         state = camera_detect_objects;
+        //state = end;
         break;
       case camera_detect_objects:
         printf("state: camera_detect_objects\n");
 
         if(ObjectDetection.getNearestObjectPosition(transform, class_name)){
           std::cout << "Class found: " << class_name << std::endl;
-          //state = robot_go_picking_pos;
-          state = robot_go_resting_pos;
+          state = robot_go_picking_pos;
+          //state = robot_go_resting_pos;
         }
         else{
           state = robot_go_resting_pos;

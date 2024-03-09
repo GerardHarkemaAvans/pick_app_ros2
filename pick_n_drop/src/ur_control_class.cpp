@@ -111,7 +111,7 @@ int UrControlClass::moveFrame(geometry_msgs::msg::TransformStamped transform){
 
       // Store frame names in variables that will be used to
       // compute transformations
-      std::string fromFrameRel = "robot_base_link";
+      std::string fromFrameRel = "base_link";
       std::string toFrameRel = "nearest_object";
 
       geometry_msgs::msg::TransformStamped t;

@@ -42,7 +42,8 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "robot_ip",
-            default_value="192.168.10.150",
+            #default_value="192.168.10.150",
+            default_value="192.168.56.101",
             description="IP address by which the robot can be reached.",
         )
     )
@@ -106,7 +107,9 @@ def generate_launch_description():
             "mock_sensor_commands": mock_sensor_commands,
             "initial_joint_controller": initial_joint_controller,
             "activate_joint_controller": activate_joint_controller,
-            "launch_rviz": launch_rviz
+            "launch_rviz": launch_rviz,
+            "description_file" : "pick_robot.urdf.xacro",
+            "description_package" : "pick_robot_description"
         }.items(),
     )
 

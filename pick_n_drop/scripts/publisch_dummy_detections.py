@@ -11,7 +11,7 @@ class MinimalPublisher(Node):
 
     def __init__(self):
         super().__init__('minimal_publisher')
-        self.publisher_ = self.create_publisher(SpatialDetectionArray, 'DummyDetections', 10)
+        self.publisher_ = self.create_publisher(SpatialDetectionArray, 'color/yolov4_spatial_detections', 10)
         timer_period = 0.5  # seconds
         self.timer = self.create_timer(timer_period, self.timer_callback)
         self.i = 0
@@ -31,8 +31,8 @@ class MinimalPublisher(Node):
         ObjectHypothesis2.score = 0.65
         ObjectHypothesis2.class_id = str(2)
         detection2.results.append(ObjectHypothesis2)
-        detection2.position.x = -0.05
-        detection2.position.y = -0.03
+        detection2.position.x = 0.04
+        detection2.position.y = 0.02
         detection2.position.z = 0.25
 
         detection3 = SpatialDetection()
@@ -40,7 +40,7 @@ class MinimalPublisher(Node):
         ObjectHypothesis3.score = 0.99
         ObjectHypothesis3.class_id = str(3)
         detection3.results.append(ObjectHypothesis3)
-        detection3.position.x = -0.1
+        detection3.position.x = 0.1
         detection3.position.y = 0.04
         detection3.position.z = 0.35
 

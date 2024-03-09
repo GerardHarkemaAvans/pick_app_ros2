@@ -127,36 +127,12 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        oak_imu_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_left_camera_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_left_camera_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         oak_model_origin:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        oak_rgb_camera_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_rgb_camera_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_right_camera_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        oak_right_camera_optical_frame:
+        pick_tcp:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -240,22 +216,10 @@ Visualization Manager:
           Value: false
         oak-d_frame:
           Value: false
-        oak_imu_frame:
-          Value: false
-        oak_left_camera_frame:
-          Value: false
-        oak_left_camera_optical_frame:
-          Value: false
         oak_model_origin:
           Value: false
-        oak_rgb_camera_frame:
-          Value: false
-        oak_rgb_camera_optical_frame:
-          Value: false
-        oak_right_camera_frame:
-          Value: false
-        oak_right_camera_optical_frame:
-          Value: false
+        pick_tcp:
+          Value: true
         robot_base_link:
           Value: false
         shoulder_link:
@@ -298,22 +262,12 @@ Visualization Manager:
                                       beugel_camera_pre:
                                         beugel_camera:
                                           oak-d_frame:
-                                            oak_imu_frame:
-                                              {}
-                                            oak_left_camera_frame:
-                                              oak_left_camera_optical_frame:
-                                                {}
                                             oak_model_origin:
                                               {}
-                                            oak_rgb_camera_frame:
-                                              oak_rgb_camera_optical_frame:
-                                                {}
-                                            oak_right_camera_frame:
-                                              oak_right_camera_optical_frame:
-                                                {}
                                       beugel_link_mesh:
                                         arrow_tcp:
-                                          {}
+                                          pick_tcp:
+                                            {}
                                       beugel_tool:
                                         {}
                                 ft_frame:
@@ -373,7 +327,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 1.4984194040298462
+      Distance: 2.1051712036132812
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -388,10 +342,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: -0.2596016228199005
+      Pitch: 0.3203982710838318
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.48539790511131287
+      Yaw: 3.200399160385132
     Saved: ~
 Window Geometry:
   Displays:
