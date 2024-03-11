@@ -42,73 +42,18 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "robot_ip",
-            default_value="192.168.10.150",
+            default_value="192.168.56.101",
             description="IP address by which the robot can be reached.",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "use_mock_hardware",
-            default_value="false",
-            description="Start robot with mock hardware mirroring command to its states.",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "launch_rviz",
-            default_value="false",
-            description="Start robot with RVIZ",
-        )
-    ) 
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "mock_sensor_commands",
-            default_value="false",
-            description="Enable mock command interfaces for sensors used for simple simulations. \
-            Used only if 'use_mock_hardware' parameter is true.",
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "initial_joint_controller",
-            default_value="scaled_joint_trajectory_controller",
-            description="Initially loaded robot controller.",
-            choices=[
-                "scaled_joint_trajectory_controller",
-                "joint_trajectory_controller",
-                "forward_velocity_controller",
-                "forward_position_controller",
-            ],
-        )
-    )
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "activate_joint_controller",
-            default_value="true",
-            description="Activate loaded joint controller.",
         )
     )
 
     # Initialize Arguments
     robot_ip = LaunchConfiguration("robot_ip")
-    use_mock_hardware = LaunchConfiguration("use_mock_hardware")
-    mock_sensor_commands = LaunchConfiguration("mock_sensor_commands")
-    initial_joint_controller = LaunchConfiguration("initial_joint_controller")
-    activate_joint_controller = LaunchConfiguration("activate_joint_controller")
-    launch_rviz = LaunchConfiguration("launch_rviz")
     
     base_launch = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([FindPackageShare("ur_robot_driver"), "/launch", "/ur_control.launch.py"]),
+        PythonLaunchDescriptionSource([FindPackageShare("pick_bringup"), "/launch", "/ur5e_bringup.launch.py"]),
         launch_arguments={
-            "ur_type": "ur5e",
             "robot_ip": robot_ip,
-            "use_mock_hardware": use_mock_hardware,
-            "mock_sensor_commands": mock_sensor_commands,
-            "initial_joint_controller": initial_joint_controller,
-            "activate_joint_controller": activate_joint_controller,
-            "launch_rviz": launch_rviz,
-            "description_file" : "pick_robot.urdf.xacro",
-            "description_package" : "pick_robot_description"
         }.items(),
     )
 

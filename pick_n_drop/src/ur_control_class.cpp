@@ -7,6 +7,9 @@
 #include "std_msgs/msg/string.hpp"
 using std::placeholders::_1;
 
+#include "tf2_ros/transform_broadcaster.h"
+
+
 #include <cstdio>
 #include <iostream>
 using namespace std;
@@ -113,6 +116,8 @@ int UrControlClass::moveFrame(geometry_msgs::msg::TransformStamped transform){
       // compute transformations
       std::string fromFrameRel = "base_link";
       std::string toFrameRel = "nearest_object";
+      //std::string fromFrameRel = "nearest_object";
+      //std::string toFrameRel = "base_link";
 
       geometry_msgs::msg::TransformStamped t;
 
@@ -121,7 +126,10 @@ int UrControlClass::moveFrame(geometry_msgs::msg::TransformStamped transform){
       try {
             t = tf_buffer_->lookupTransform(
             toFrameRel, fromFrameRel,
-            tf2::TimePointZero);
+            //_node->get_clock()->now());//
+            tf2::TimePointZero);//,
+            
+            //rclcpp::Duration::from_seconds(2.0));
       } catch (const tf2::TransformException & ex) {
             RCLCPP_INFO(
             _node->get_logger(), "Could not transform %s to %s: %s",
@@ -129,6 +137,33 @@ int UrControlClass::moveFrame(geometry_msgs::msg::TransformStamped transform){
             return 0;
       }
 
+      printf("x: %f\n", t.transform.translation.x);
+      printf("y: %f\n", t.transform.translation.y);      
+      printf("z: %f\n", t.transform.translation.z);
+
+      {
+            geometry_msgs::msg::TransformStamped transform;
+            //tf2_ros::TransformBroadcaster tf_broadcaster;
+            transform.header.stamp = _node->now();
+            transform.header.frame_id = fromFrameRel;
+            transform.child_frame_id = "pick_point";
+
+            transform.transform.translation.x = t.transform.translation.x;
+            transform.transform.translation.y = t.transform.translation.y;
+            transform.transform.translation.z = t.transform.translation.z;
+
+            transform.transform.rotation.x = 0.0;
+            transform.transform.rotation.y = 0.0;
+            transform.transform.rotation.z = 0.0;
+            transform.transform.rotation.w = 1.0;
+
+
+            //_node->sendTransform(transform);
+            //tf_broadcaster.sendTransform(transform);
+      }
+
+
+      //return 0;
       tf2::Quaternion myQuaternion;
 
       myQuaternion.setRPY(3.14 ,0, 0);
@@ -144,7 +179,23 @@ int UrControlClass::moveFrame(geometry_msgs::msg::TransformStamped transform){
       target_pose1.position.z = t.transform.translation.z+0.05;
       move_group->setPoseTarget(target_pose1);
       //move_group->plan();
-      move_group->move();
+      //move_group->move();
+
+      //move_group->setJointValueTarget(move_group->getNamedTargetValues(Posename));
+      
+      moveit::planning_interface::MoveGroupInterface::Plan my_plan_arm;
+
+      bool success = (move_group->plan(my_plan_arm) == moveit::core::MoveItErrorCode::SUCCESS);
+      if (success)
+      {
+            printf("Execute plan\n");
+            move_group->move();
+      }
+      else{
+            printf("Faild to create plan\n");
+      }
+
+
 
       return 0;
     }

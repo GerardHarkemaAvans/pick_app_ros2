@@ -94,10 +94,11 @@ int main(int argc, char **argv)
         //Depthai.TakePCLPhoto();
         break;
       case robot_go_picking_pos:
+        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
         printf("state: robot_go_picking_pos\n");
         fflush(stdout);
         UrControl.moveFrame(transform);
-        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(5000));
         state = robot_go_resting_pos;
         break;
       case robot_go_resting_pos:

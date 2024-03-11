@@ -32,7 +32,7 @@ ObjectDetectionClass::ObjectDetectionClass(std::shared_ptr<rclcpp::Node> node, s
       }
       std::cout << std::endl;
 
-
+      //tf_broadcaster = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
 }
 
 
@@ -41,7 +41,6 @@ void ObjectDetectionClass::detections_callback(depthai_ros_msgs::msg::SpatialDet
       detections_array = msg;
 }
 
-//geometry_msgs::msg::TransformStamped  
 bool ObjectDetectionClass::getNearestObjectPosition(geometry_msgs::msg::TransformStamped &transform, std::string &class_name){
       //geometry_msgs::msg::TransformStamped transform;
 
@@ -82,7 +81,7 @@ bool ObjectDetectionClass::getNearestObjectPosition(geometry_msgs::msg::Transfor
                   transform.transform.rotation.w = 1.0;
 
                   detections_array = nullptr;
-                  //_node->TransformBroadcaster(transform);
+                  //_node->sendTransform(transform);
                   tf_broadcaster.sendTransform(transform);
                   found = true;
             }
