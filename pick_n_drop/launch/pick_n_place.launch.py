@@ -178,7 +178,7 @@ def launch_setup(context, *args, **kwargs):
     robot_description_planning = {
         "robot_description_planning": load_yaml(
             str(moveit_config_package.perform(context)),
-            os.path.join("config", str(moveit_joint_limits_file.perform(context))),
+            os.path.join("config", "ur_config", str(moveit_joint_limits_file.perform(context))),
         )
     }
 

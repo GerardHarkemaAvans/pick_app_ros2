@@ -16,7 +16,7 @@ using std::placeholders::_1;
 //#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include "geometry_msgs/msg/point.hpp"
 #include "geometry_msgs/msg/transform_stamped.hpp"
-//#include "tf2_ros/transform_broadcaster.h"
+#include "tf2_ros/transform_broadcaster.h"
 #include "tf2_ros/static_transform_broadcaster.h"
 #include "jsoncpp/json/json.h"
 
@@ -36,7 +36,7 @@ class ObjectDetectionClass
     rclcpp::Subscription<depthai_ros_msgs::msg::SpatialDetectionArray>::SharedPtr detections_subscription_;
     void detections_callback(depthai_ros_msgs::msg::SpatialDetectionArray::SharedPtr msg) const;
     mutable  depthai_ros_msgs::msg::SpatialDetectionArray::SharedPtr detections_array = nullptr;
-    tf2_ros::StaticTransformBroadcaster tf_broadcaster;
+    tf2_ros::TransformBroadcaster tf_broadcaster;
     int NumClasses;
     std::vector<std::string> class_names;
 };

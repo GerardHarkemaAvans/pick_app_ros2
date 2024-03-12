@@ -24,7 +24,7 @@ using std::placeholders::_1;
 #include "tf2/exceptions.h"
 #include "tf2_ros/transform_listener.h"
 #include "tf2_ros/buffer.h"
-//#include "tf2_ros/transform_broadcaster.h"
+#include "tf2_ros/transform_broadcaster.h"
 #include "tf2_ros/static_transform_broadcaster.h"
 #include "geometry_msgs/msg/pose_stamped.hpp"
 
@@ -42,7 +42,7 @@ class UrControlClass
     moveit::planning_interface::MoveGroupInterface *move_group;
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_{nullptr};
     std::unique_ptr<tf2_ros::Buffer> tf_buffer_;
-    tf2_ros::StaticTransformBroadcaster tf_broadcaster;
+    tf2_ros::TransformBroadcaster tf_broadcaster;
 
 };
 
