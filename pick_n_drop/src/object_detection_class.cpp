@@ -32,7 +32,6 @@ ObjectDetectionClass::ObjectDetectionClass(std::shared_ptr<rclcpp::Node> node, s
       }
       std::cout << std::endl;
 
-      //tf_broadcaster = std::make_unique<tf2_ros::TransformBroadcaster>(*this);
 }
 
 
@@ -41,7 +40,7 @@ void ObjectDetectionClass::detections_callback(depthai_ros_msgs::msg::SpatialDet
       detections_array = msg;
 }
 
-bool ObjectDetectionClass::getNearestObjectPosition(geometry_msgs::msg::TransformStamped &transform, std::string &class_name){
+bool ObjectDetectionClass::getNearestObjectPosition(std::string &class_name){
       //geometry_msgs::msg::TransformStamped transform;
 
       bool found = false;
@@ -66,7 +65,8 @@ bool ObjectDetectionClass::getNearestObjectPosition(geometry_msgs::msg::Transfor
                   RCLCPP_INFO(_node->get_logger(), "Nearest z position: %f",nearest_detection->position.z);
 
                   class_name = class_names[std::stoi(nearest_detection->results[0].class_id)];
-
+                  
+                  geometry_msgs::msg::TransformStamped transform;
                   transform.header.stamp = _node->now();
                   transform.header.frame_id = "oak_rgb_camera_optical_frame";
                   transform.child_frame_id = "nearest_object";

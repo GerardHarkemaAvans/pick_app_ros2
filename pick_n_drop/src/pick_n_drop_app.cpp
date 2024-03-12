@@ -83,7 +83,7 @@ int main(int argc, char **argv)
       case camera_detect_objects:
         printf("state: camera_detect_objects\n");
 
-        if(ObjectDetection.getNearestObjectPosition(transform, class_name)){
+        if(ObjectDetection.getNearestObjectPosition(class_name)){
           std::cout << "Class found: " << class_name << std::endl;
           state = robot_go_picking_pos;
           //state = robot_go_resting_pos;
@@ -94,10 +94,10 @@ int main(int argc, char **argv)
         //Depthai.TakePCLPhoto();
         break;
       case robot_go_picking_pos:
-        std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
         printf("state: robot_go_picking_pos\n");
         fflush(stdout);
-        UrControl.moveFrame(transform);
+        UrControl.moveFrame();//transform);
         //std::this_thread::sleep_for(std::chrono::milliseconds(5000));
         state = robot_go_resting_pos;
         break;

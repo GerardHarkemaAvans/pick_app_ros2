@@ -7,7 +7,7 @@
 #include "std_msgs/msg/string.hpp"
 using std::placeholders::_1;
 
-#include "tf2_ros/transform_broadcaster.h"
+
 
 
 #include <cstdio>
@@ -17,7 +17,7 @@ using namespace std;
 
 #include "pick_n_drop/ur_control_class.hpp"
 
-UrControlClass::UrControlClass(std::shared_ptr<rclcpp::Node> node) : _node(node)
+UrControlClass::UrControlClass(std::shared_ptr<rclcpp::Node> node) : _node(node), tf_broadcaster(_node)
 {
 
       static const std::string PLANNING_GROUP = "arm";
@@ -107,17 +107,15 @@ int UrControlClass::movePose(const char *Posename)
       return 0;
 }
 
-int UrControlClass::moveFrame(geometry_msgs::msg::TransformStamped transform){
-      std::cout << transform.header.frame_id << std::endl;
+int UrControlClass::moveFrame(){
+      //std::cout << transform.header.frame_id << std::endl;
 
-      geometry_msgs::msg::Pose target_pose1;
+      geometry_msgs::msg::Pose target_pose;
 
       // Store frame names in variables that will be used to
       // compute transformations
-      std::string fromFrameRel = "base_link";
-      std::string toFrameRel = "nearest_object";
-      //std::string fromFrameRel = "nearest_object";
-      //std::string toFrameRel = "base_link";
+      std::string fromFrameRel = "nearest_object";
+      std::string toFrameRel = "world";//"base";//_link";
 
       geometry_msgs::msg::TransformStamped t;
 
@@ -137,52 +135,41 @@ int UrControlClass::moveFrame(geometry_msgs::msg::TransformStamped transform){
             return 0;
       }
 
-      printf("x: %f\n", t.transform.translation.x);
-      printf("y: %f\n", t.transform.translation.y);      
-      printf("z: %f\n", t.transform.translation.z);
+      tf2::Quaternion myQuaternion;
+
+      myQuaternion.setRPY(3.14 ,0, 3.14/2);
+
+      myQuaternion=myQuaternion.normalize();
+
+      target_pose.orientation.x = myQuaternion.x();
+      target_pose.orientation.y = myQuaternion.y();
+      target_pose.orientation.z = myQuaternion.z();
+      target_pose.orientation.w = myQuaternion.w();
+      target_pose.position.x = t.transform.translation.x;
+      target_pose.position.y = t.transform.translation.y;
+      target_pose.position.z = t.transform.translation.z;//+0.05;
 
       {
             geometry_msgs::msg::TransformStamped transform;
             //tf2_ros::TransformBroadcaster tf_broadcaster;
             transform.header.stamp = _node->now();
-            transform.header.frame_id = fromFrameRel;
+            transform.header.frame_id = "world";
             transform.child_frame_id = "pick_point";
 
-            transform.transform.translation.x = t.transform.translation.x;
-            transform.transform.translation.y = t.transform.translation.y;
-            transform.transform.translation.z = t.transform.translation.z;
+            transform.transform.translation.x = target_pose.position.x;
+            transform.transform.translation.y = target_pose.position.y;
+            transform.transform.translation.z = target_pose.position.z;
 
-            transform.transform.rotation.x = 0.0;
-            transform.transform.rotation.y = 0.0;
-            transform.transform.rotation.z = 0.0;
-            transform.transform.rotation.w = 1.0;
-
-
-            //_node->sendTransform(transform);
-            //tf_broadcaster.sendTransform(transform);
+            transform.transform.rotation.x = target_pose.orientation.x;
+            transform.transform.rotation.y = target_pose.orientation.y;
+            transform.transform.rotation.z = target_pose.orientation.z;
+            transform.transform.rotation.w = target_pose.orientation.w;
+            tf_broadcaster.sendTransform(transform);
       }
 
 
       //return 0;
-      tf2::Quaternion myQuaternion;
-
-      myQuaternion.setRPY(3.14 ,0, 0);
-
-      myQuaternion=myQuaternion.normalize();
-
-      target_pose1.orientation.x = myQuaternion.x();
-      target_pose1.orientation.y = myQuaternion.y();
-      target_pose1.orientation.z = myQuaternion.z();
-      target_pose1.orientation.w = myQuaternion.w();
-      target_pose1.position.x = t.transform.translation.x;
-      target_pose1.position.y = t.transform.translation.y;
-      target_pose1.position.z = t.transform.translation.z+0.05;
-      move_group->setPoseTarget(target_pose1);
-      //move_group->plan();
-      //move_group->move();
-
-      //move_group->setJointValueTarget(move_group->getNamedTargetValues(Posename));
-      
+      move_group->setPoseTarget(target_pose);
       moveit::planning_interface::MoveGroupInterface::Plan my_plan_arm;
 
       bool success = (move_group->plan(my_plan_arm) == moveit::core::MoveItErrorCode::SUCCESS);
@@ -193,6 +180,7 @@ int UrControlClass::moveFrame(geometry_msgs::msg::TransformStamped transform){
       }
       else{
             printf("Faild to create plan\n");
+            return 1;
       }
 
 

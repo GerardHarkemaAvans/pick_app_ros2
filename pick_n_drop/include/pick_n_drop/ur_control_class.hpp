@@ -24,6 +24,9 @@ using std::placeholders::_1;
 #include "tf2/exceptions.h"
 #include "tf2_ros/transform_listener.h"
 #include "tf2_ros/buffer.h"
+//#include "tf2_ros/transform_broadcaster.h"
+#include "tf2_ros/static_transform_broadcaster.h"
+#include "geometry_msgs/msg/pose_stamped.hpp"
 
 #include "pick_n_drop/ur_control_class.hpp"
 
@@ -34,11 +37,13 @@ class UrControlClass
 
     UrControlClass(std::shared_ptr<rclcpp::Node> node);
     int movePose(const char *Posename);
-    int moveFrame(geometry_msgs::msg::TransformStamped transform);
+    int moveFrame();//geometry_msgs::msg::TransformStamped transform);
   private:
     moveit::planning_interface::MoveGroupInterface *move_group;
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_{nullptr};
     std::unique_ptr<tf2_ros::Buffer> tf_buffer_;
+    tf2_ros::StaticTransformBroadcaster tf_broadcaster;
+
 };
 
 #endif
