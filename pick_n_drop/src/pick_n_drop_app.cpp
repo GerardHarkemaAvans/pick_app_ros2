@@ -1,5 +1,5 @@
 #include <cstdio>
-#include "pick_n_drop/depthai_class.hpp"
+
 #include "pick_n_drop/ur_control_class.hpp"
 #include "pick_n_drop/object_detection_class.hpp"
 

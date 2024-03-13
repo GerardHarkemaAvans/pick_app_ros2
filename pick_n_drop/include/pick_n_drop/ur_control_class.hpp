@@ -28,7 +28,6 @@ using std::placeholders::_1;
 #include "tf2_ros/static_transform_broadcaster.h"
 #include "geometry_msgs/msg/pose_stamped.hpp"
 
-#include "pick_n_drop/ur_control_class.hpp"
 
 class UrControlClass
 {

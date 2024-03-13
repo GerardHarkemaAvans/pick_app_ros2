@@ -8,14 +8,17 @@
 using std::placeholders::_1;
 
 
-
-
 #include <cstdio>
 #include <iostream>
 using namespace std;
 // #include <pluginlib/class_loader.hpp>
 
 #include "pick_n_drop/ur_control_class.hpp"
+
+//#include <moveit_visual_tools/moveit_visual_tools.h>
+
+//namespace rvt = rviz_visual_tools;
+
 
 UrControlClass::UrControlClass(std::shared_ptr<rclcpp::Node> node) : _node(node), tf_broadcaster(_node)
 {
@@ -27,8 +30,23 @@ UrControlClass::UrControlClass(std::shared_ptr<rclcpp::Node> node) : _node(node)
       // class can be easily set up using just the name of the planning group you would like to control and plan for.
       move_group = new moveit::planning_interface::MoveGroupInterface(node, PLANNING_GROUP);
 
+const moveit::core::JointModelGroup* joint_model_group =
+      move_group.getCurrentState()->getJointModelGroup(PLANNING_GROUP);
+
+
       tf_buffer_ = std::make_unique<tf2_ros::Buffer>(node->get_clock());
       tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
+#if 0
+      moveit_visual_tools::MoveItVisualTools visual_tools(node, "panda_link0", "move_group_tutorial",
+                                                      move_group->getRobotModel());
+
+      visual_tools.deleteAllMarkers();
+
+      /* Remote control is an introspection tool that allows users to step through a high level script */
+      /* via buttons and keyboard shortcuts in RViz */
+      visual_tools.loadRemoteControl();
+
+#endif
 
       printf("Move group ready\n");
 }
@@ -141,46 +159,67 @@ int UrControlClass::moveFrame(){
 
       myQuaternion=myQuaternion.normalize();
 
+
+
       target_pose.orientation.x = myQuaternion.x();
       target_pose.orientation.y = myQuaternion.y();
       target_pose.orientation.z = myQuaternion.z();
       target_pose.orientation.w = myQuaternion.w();
       target_pose.position.x = t.transform.translation.x;
       target_pose.position.y = t.transform.translation.y;
-      target_pose.position.z = t.transform.translation.z;//+0.05;
+      double offsets[] = {0.05, 0, 0.05};
 
-      {
-            geometry_msgs::msg::TransformStamped transform;
-            //tf2_ros::TransformBroadcaster tf_broadcaster;
-            transform.header.stamp = _node->now();
-            transform.header.frame_id = "world";
-            transform.child_frame_id = "pick_point";
+      for (double offset : offsets) {
+            target_pose.position.z = t.transform.translation.z + offset;
+#if 1
+            {
+                  geometry_msgs::msg::TransformStamped transform;
+                  //tf2_ros::TransformBroadcaster tf_broadcaster;
+                  transform.header.stamp = _node->now();
+                  transform.header.frame_id = "world";
+                  transform.child_frame_id = "pick_point";
 
-            transform.transform.translation.x = target_pose.position.x;
-            transform.transform.translation.y = target_pose.position.y;
-            transform.transform.translation.z = target_pose.position.z;
+                  transform.transform.translation.x = target_pose.position.x;
+                  transform.transform.translation.y = target_pose.position.y;
+                  transform.transform.translation.z = target_pose.position.z;
 
-            transform.transform.rotation.x = target_pose.orientation.x;
-            transform.transform.rotation.y = target_pose.orientation.y;
-            transform.transform.rotation.z = target_pose.orientation.z;
-            transform.transform.rotation.w = target_pose.orientation.w;
-            tf_broadcaster.sendTransform(transform);
-      }
+                  transform.transform.rotation.x = target_pose.orientation.x;
+                  transform.transform.rotation.y = target_pose.orientation.y;
+                  transform.transform.rotation.z = target_pose.orientation.z;
+                  transform.transform.rotation.w = target_pose.orientation.w;
+                  tf_broadcaster.sendTransform(transform);
+            }
+#endif
 
 
-      //return 0;
-      move_group->setPoseTarget(target_pose);
-      moveit::planning_interface::MoveGroupInterface::Plan my_plan_arm;
+  moveit::core::RobotState start_state(*move_group->getCurrentState());
+  geometry_msgs::msg::Pose start_pose2;
+  start_pose2.orientation.w = 1.0;
+  start_pose2.position.x = 0.55;
+  start_pose2.position.y = -0.05;
+  start_pose2.position.z = 0.8;
+  start_state.setFromIK(joint_model_group, start_pose2);
+  move_group.setStartState(start_state);
 
-      bool success = (move_group->plan(my_plan_arm) == moveit::core::MoveItErrorCode::SUCCESS);
-      if (success)
-      {
-            printf("Execute plan\n");
-            move_group->move();
-      }
-      else{
-            printf("Faild to create plan\n");
-            return 1;
+
+
+
+            //return 0;
+            move_group->setPlanningTime(10.0);
+            move_group->setPoseTarget(target_pose);
+            moveit::planning_interface::MoveGroupInterface::Plan my_plan_arm;
+
+            bool success = (move_group->plan(my_plan_arm) == moveit::core::MoveItErrorCode::SUCCESS);
+            if (success)
+            {
+                  printf("Execute plan\n");
+                  move_group->move();
+            }
+            else{
+                  printf("Faild to create plan\n");
+                  return 1;
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
       }
 
 

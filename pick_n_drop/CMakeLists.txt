@@ -35,6 +35,10 @@ find_package(std_msgs REQUIRED)
 find_package(vision_msgs REQUIRED)
 find_package(depthai_ros_msgs REQUIRED)
 find_package(PCL 1.10 REQUIRED)
+find_package(moveit_core REQUIRED)
+find_package(moveit_ros_planning REQUIRED)
+find_package(moveit_ros_planning_interface REQUIRED)
+
 
 
 find_package(rclpy REQUIRED)
@@ -53,6 +57,8 @@ set(dependencies
   vision_msgs
   moveit_ros_planning_interface
   depthai_ros_msgs
+  rviz_visual_tools
+  moveit_visual_tools
 )
 
 include_directories(
@@ -113,9 +119,8 @@ macro(app_add_node_ros4 node_name node_src1 node_src2 node_src3 node_src4)
 
 endmacro()
 
-app_add_node_ros4(pick_n_drop_node 
+app_add_node_ros3(pick_n_drop_node 
                   src/pick_n_drop_app.cpp 
-                  src/depthai_class.cpp 
                   src/ur_control_class.cpp
                   src/object_detection_class.cpp)
 
