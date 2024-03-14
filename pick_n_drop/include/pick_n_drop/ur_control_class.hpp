@@ -39,6 +39,7 @@ class UrControlClass
     int moveFrame();//geometry_msgs::msg::TransformStamped transform);
   private:
     moveit::planning_interface::MoveGroupInterface *move_group;
+    const moveit::core::JointModelGroup* joint_model_group;
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_{nullptr};
     std::unique_ptr<tf2_ros::Buffer> tf_buffer_;
     tf2_ros::TransformBroadcaster tf_broadcaster;

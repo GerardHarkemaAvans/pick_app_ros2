@@ -30,8 +30,7 @@ UrControlClass::UrControlClass(std::shared_ptr<rclcpp::Node> node) : _node(node)
       // class can be easily set up using just the name of the planning group you would like to control and plan for.
       move_group = new moveit::planning_interface::MoveGroupInterface(node, PLANNING_GROUP);
 
-const moveit::core::JointModelGroup* joint_model_group =
-      move_group.getCurrentState()->getJointModelGroup(PLANNING_GROUP);
+      joint_model_group = move_group->getCurrentState()->getJointModelGroup(PLANNING_GROUP);
 
 
       tf_buffer_ = std::make_unique<tf2_ros::Buffer>(node->get_clock());
@@ -191,18 +190,16 @@ int UrControlClass::moveFrame(){
             }
 #endif
 
-
-  moveit::core::RobotState start_state(*move_group->getCurrentState());
+            moveit::core::RobotState start_state(*move_group->getCurrentState());
+  #if 0
   geometry_msgs::msg::Pose start_pose2;
   start_pose2.orientation.w = 1.0;
   start_pose2.position.x = 0.55;
   start_pose2.position.y = -0.05;
   start_pose2.position.z = 0.8;
   start_state.setFromIK(joint_model_group, start_pose2);
-  move_group.setStartState(start_state);
-
-
-
+  #endif
+            move_group->setStartState(start_state);
 
             //return 0;
             move_group->setPlanningTime(10.0);

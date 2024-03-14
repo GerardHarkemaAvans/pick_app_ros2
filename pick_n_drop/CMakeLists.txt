@@ -57,8 +57,6 @@ set(dependencies
   vision_msgs
   moveit_ros_planning_interface
   depthai_ros_msgs
-  rviz_visual_tools
-  moveit_visual_tools
 )
 
 include_directories(
