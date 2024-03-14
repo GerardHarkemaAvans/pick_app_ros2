@@ -152,16 +152,23 @@ int UrControlClass::moveFrame(){
             return 0;
       }
 
+      geometry_msgs::msg::PoseStamped 	pose = move_group->getCurrentPose();
+      printf("w(start): %f\n", pose.pose.orientation.w);
+      printf("x(start): %f\n", pose.pose.orientation.x);
+      printf("y(start): %f\n", pose.pose.orientation.y);
+      printf("z(start): %f\n", pose.pose.orientation.z);
+
+
       tf2::Quaternion myQuaternion;
 
       myQuaternion.setRPY(3.14 ,0, 3.14/2);
 
       myQuaternion=myQuaternion.normalize();
 
-      target_pose.pose.orientation.x = myQuaternion.x();
-      target_pose.pose.orientation.y = myQuaternion.y();
-      target_pose.pose.orientation.z = myQuaternion.z();
-      target_pose.pose.orientation.w = myQuaternion.w();
+      target_pose.pose.orientation.x = pose.pose.orientation.x;//myQuaternion.x();
+      target_pose.pose.orientation.y = pose.pose.orientation.y;//myQuaternion.y();
+      target_pose.pose.orientation.z = pose.pose.orientation.z;//myQuaternion.z();
+      target_pose.pose.orientation.w = pose.pose.orientation.w;//myQuaternion.w();
       target_pose.pose.position.x = t.transform.translation.x;
       target_pose.pose.position.y = t.transform.translation.y;
       double offsets[] = {0.05, 0, 0.05};
