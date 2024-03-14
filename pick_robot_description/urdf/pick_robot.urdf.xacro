@@ -142,12 +142,12 @@
       <mass value="10"/>
       <xacro:box_inertia m="10" x="1.1" y="0.7" z="0.03"/>
     </inertial>
-    <collision>
+        <collision>
       <geometry>
         <box size="0.7 1.1 0.03" />
       </geometry>
     </collision>
-  </link>
+      </link>
 
   <joint name="baseplate_joint" type="fixed">
     <origin xyz="0 0 0" />
@@ -167,12 +167,12 @@
       <mass value="1"/>
       <xacro:box_inertia m="1" x="0.3" y="0.3" z="0.012"/>
     </inertial>
-    <collision>
+        <collision>
       <geometry>
         <box size="0.3 0.3 0.012" />
       </geometry>
     </collision>
-  </link>
+      </link>
 
   <joint name="mountingplate_joint" type="fixed">
     <origin xyz="-0.2 0.0 0.021" />

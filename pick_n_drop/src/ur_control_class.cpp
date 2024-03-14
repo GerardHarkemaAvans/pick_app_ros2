@@ -83,7 +83,7 @@ int UrControlClass::movePose(const char *Posename)
 
       //move_group->setJointValueTarget(target);
       //move_group->setPlanningTime(100.0);
-      //move_group->setNumPlanningAttempts (10);
+      move_group->setNumPlanningAttempts(10);
 
       //move_group->setPathConstraints(constraints);
 
@@ -127,7 +127,7 @@ int UrControlClass::movePose(const char *Posename)
 int UrControlClass::moveFrame(){
       //std::cout << transform.header.frame_id << std::endl;
 
-      geometry_msgs::msg::Pose target_pose;
+      geometry_msgs::msg::PoseStamped target_pose;
 
       // Store frame names in variables that will be used to
       // compute transformations
@@ -158,18 +158,25 @@ int UrControlClass::moveFrame(){
 
       myQuaternion=myQuaternion.normalize();
 
-
-
-      target_pose.orientation.x = myQuaternion.x();
-      target_pose.orientation.y = myQuaternion.y();
-      target_pose.orientation.z = myQuaternion.z();
-      target_pose.orientation.w = myQuaternion.w();
-      target_pose.position.x = t.transform.translation.x;
-      target_pose.position.y = t.transform.translation.y;
+      target_pose.pose.orientation.x = myQuaternion.x();
+      target_pose.pose.orientation.y = myQuaternion.y();
+      target_pose.pose.orientation.z = myQuaternion.z();
+      target_pose.pose.orientation.w = myQuaternion.w();
+      target_pose.pose.position.x = t.transform.translation.x;
+      target_pose.pose.position.y = t.transform.translation.y;
       double offsets[] = {0.05, 0, 0.05};
 
+      printf("w(req): %f\n", target_pose.pose.orientation.w);
+      printf("x(req): %f\n", target_pose.pose.orientation.x);
+      printf("y(req): %f\n", target_pose.pose.orientation.y);
+      printf("z(req): %f\n", target_pose.pose.orientation.z);
+      target_pose.header.frame_id = toFrameRel;
+
+      int i=0;
       for (double offset : offsets) {
-            target_pose.position.z = t.transform.translation.z + offset;
+            target_pose.pose.position.z = t.transform.translation.z + offset;
+            target_pose.header.stamp = _node->now();
+
 #if 1
             {
                   geometry_msgs::msg::TransformStamped transform;
@@ -178,14 +185,14 @@ int UrControlClass::moveFrame(){
                   transform.header.frame_id = "world";
                   transform.child_frame_id = "pick_point";
 
-                  transform.transform.translation.x = target_pose.position.x;
-                  transform.transform.translation.y = target_pose.position.y;
-                  transform.transform.translation.z = target_pose.position.z;
+                  transform.transform.translation.x = target_pose.pose.position.x;
+                  transform.transform.translation.y = target_pose.pose.position.y;
+                  transform.transform.translation.z = target_pose.pose.position.z;
 
-                  transform.transform.rotation.x = target_pose.orientation.x;
-                  transform.transform.rotation.y = target_pose.orientation.y;
-                  transform.transform.rotation.z = target_pose.orientation.z;
-                  transform.transform.rotation.w = target_pose.orientation.w;
+                  transform.transform.rotation.x = target_pose.pose.orientation.x;
+                  transform.transform.rotation.y = target_pose.pose.orientation.y;
+                  transform.transform.rotation.z = target_pose.pose.orientation.z;
+                  transform.transform.rotation.w = target_pose.pose.orientation.w;
                   tf_broadcaster.sendTransform(transform);
             }
 #endif
@@ -203,6 +210,7 @@ int UrControlClass::moveFrame(){
 
             //return 0;
             move_group->setPlanningTime(10.0);
+            move_group->setNumPlanningAttempts(10);
             move_group->setPoseTarget(target_pose);
             moveit::planning_interface::MoveGroupInterface::Plan my_plan_arm;
 
@@ -211,6 +219,13 @@ int UrControlClass::moveFrame(){
             {
                   printf("Execute plan\n");
                   move_group->move();
+                  geometry_msgs::msg::PoseStamped 	pose = move_group->getCurrentPose();
+                  printf("w%i: %f\n", i, pose.pose.orientation.w);
+                  printf("x%i: %f\n", i, pose.pose.orientation.x);
+                  printf("y%i: %f\n", i, pose.pose.orientation.y);
+                  printf("z%i: %f\n", i++, pose.pose.orientation.z);
+
+
             }
             else{
                   printf("Faild to create plan\n");
