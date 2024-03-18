@@ -218,7 +218,37 @@ int UrControlClass::moveFrame(){
             //return 0;
             move_group->setPlanningTime(10.0);
             move_group->setNumPlanningAttempts(10);
-            move_group->setPoseTarget(target_pose);
+            //move_group->setPoseTarget(target_pose);
+            move_group->setApproximateJointValueTarget(target_pose);
+
+            // cartesian
+#if 0
+            geometry_msgs::msg::Pose target_pose3 = move_group->getCurrentPose().pose;
+
+            std::vector<geometry_msgs::msg::Pose> waypoints;
+            waypoints.push_back(target_pose3);
+
+            target_pose3.position.z -= 0.2;
+            waypoints.push_back(target_pose3);  // down
+
+            target_pose3.position.y -= 0.2;
+            waypoints.push_back(target_pose3);  // right
+
+            target_pose3.position.z += 0.2;
+            target_pose3.position.y += 0.2;
+            target_pose3.position.x -= 0.2;
+            waypoints.push_back(target_pose3);  // up and left
+
+
+            move_group->setMaxVelocityScalingFactor(0.1);
+
+            moveit_msgs::msg::RobotTrajectory trajectory;
+            const double jump_threshold = 0.0;
+            const double eef_step = 0.01;
+            double fraction = move_group->computeCartesianPath(waypoints, eef_step, jump_threshold, trajectory);
+            //ROS_INFO_NAMED("tutorial", "Visualizing plan 4 (Cartesian path) (%.2f%% acheived)", fraction * 100.0);
+#endif
+            // end caresian
             moveit::planning_interface::MoveGroupInterface::Plan my_plan_arm;
 
             bool success = (move_group->plan(my_plan_arm) == moveit::core::MoveItErrorCode::SUCCESS);
