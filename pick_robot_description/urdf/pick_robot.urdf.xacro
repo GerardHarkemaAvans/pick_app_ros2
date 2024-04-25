@@ -216,10 +216,12 @@
     <child link="beugel_link" />
     <origin xyz="0.0 0.00 0.0" rpy="0 0 0"/> 
   </joint>
-  
+
+
+
     <xacro:arg name="camera_name"   default="oak" />
     <xacro:arg name="camera_model"  default="OAK-D" />
-    <xacro:arg name="base_frame"    default="beugel_camera" />
+    <xacro:arg name="base_frame"    default="camera_orgin" />
     <xacro:arg name="parent_frame"  default="beugel_camera" />
     <xacro:arg name="cam_pos_x"     default="0.0" />
     <xacro:arg name="cam_pos_y"     default="0.0" />
@@ -237,7 +239,7 @@
 -->
     <xacro:include filename="depthai_macro.urdf.xacro"/>
     <xacro:depthai_camera camera_name = "$(arg camera_name)"
-parent = "$(arg parent_frame)"
+                          parent = "$(arg parent_frame)"
                           camera_model = "$(arg camera_model)" 
                           base_frame = "$(arg base_frame)"
                           cam_pos_x = "$(arg cam_pos_x)"
