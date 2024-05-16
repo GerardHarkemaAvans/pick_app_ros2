@@ -89,6 +89,7 @@ int main(int argc, char **argv)
           //state = robot_go_resting_pos;
         }
         else{
+          std::cout << "No objects found" << std::endl;
           state = robot_go_resting_pos;
         }
         //Depthai.TakePCLPhoto();

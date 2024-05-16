@@ -47,6 +47,8 @@ bool ObjectDetectionClass::getNearestObjectPosition(std::string &class_name){
       // detection shold not be older than 3 seconds
       rclcpp::Duration timeout_duration = rclcpp::Duration::from_seconds(3.0);
 
+      class_name = "None";
+
       std::this_thread::sleep_for(std::chrono::milliseconds(5000));
       rclcpp::Time time_now = _node->now();
 
@@ -54,36 +56,38 @@ bool ObjectDetectionClass::getNearestObjectPosition(std::string &class_name){
             rclcpp::Time stamp = detections_array->header.stamp;
             if(stamp > (time_now - timeout_duration)){
                   //RCLCPP_INFO(_node->get_logger(), "I current the message , ID: %s", detections_array->header.frame_id.c_str());  
-                  std::vector<depthai_ros_msgs::msg::SpatialDetection>::iterator it;
-                  std::vector<depthai_ros_msgs::msg::SpatialDetection>::iterator nearest_detection = detections_array->detections.begin();
-                  for (it = detections_array->detections.begin(); it != detections_array->detections.end(); ++it){
-                        if(it->position.z < nearest_detection->position.z){
-                              nearest_detection = it;
+                  if(detections_array->detections.size()){
+                        std::vector<depthai_ros_msgs::msg::SpatialDetection>::iterator it;
+                        std::vector<depthai_ros_msgs::msg::SpatialDetection>::iterator nearest_detection = detections_array->detections.begin();
+                        for (it = detections_array->detections.begin(); it != detections_array->detections.end(); ++it){
+                              if(it->position.z < nearest_detection->position.z){
+                                    nearest_detection = it;
+                              }
+                              //RCLCPP_INFO(_node->get_logger(), "I current z position: %f", it->position.z);
                         }
-                        //RCLCPP_INFO(_node->get_logger(), "I current z position: %f", it->position.z);
+                        RCLCPP_INFO(_node->get_logger(), "Nearest z position: %f",nearest_detection->position.z);
+
+                        class_name = class_names[std::stoi(nearest_detection->results[0].class_id)];
+                        
+                        geometry_msgs::msg::TransformStamped transform;
+                        transform.header.stamp = _node->now();
+                        transform.header.frame_id = "oak_rgb_camera_optical_frame";
+                        transform.child_frame_id = "nearest_object";
+
+                        transform.transform.translation.x = nearest_detection->position.x;
+                        transform.transform.translation.y = -nearest_detection->position.y;
+                        transform.transform.translation.z = nearest_detection->position.z;
+
+                        transform.transform.rotation.x = 0.0;
+                        transform.transform.rotation.y = 0.0;
+                        transform.transform.rotation.z = 0.0;
+                        transform.transform.rotation.w = 1.0;
+
+                        detections_array = nullptr;
+                        //_node->sendTransform(transform);
+                        tf_broadcaster.sendTransform(transform);
+                        found = true;
                   }
-                  RCLCPP_INFO(_node->get_logger(), "Nearest z position: %f",nearest_detection->position.z);
-
-                  class_name = class_names[std::stoi(nearest_detection->results[0].class_id)];
-                  
-                  geometry_msgs::msg::TransformStamped transform;
-                  transform.header.stamp = _node->now();
-                  transform.header.frame_id = "oak_rgb_camera_optical_frame";
-                  transform.child_frame_id = "nearest_object";
-
-                  transform.transform.translation.x = nearest_detection->position.x;
-                  transform.transform.translation.y = -nearest_detection->position.y;
-                  transform.transform.translation.z = nearest_detection->position.z;
-
-                  transform.transform.rotation.x = 0.0;
-                  transform.transform.rotation.y = 0.0;
-                  transform.transform.rotation.z = 0.0;
-                  transform.transform.rotation.w = 1.0;
-
-                  detections_array = nullptr;
-                  //_node->sendTransform(transform);
-                  tf_broadcaster.sendTransform(transform);
-                  found = true;
             }
 
       }    

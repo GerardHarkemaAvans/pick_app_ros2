@@ -208,17 +208,13 @@
   </joint>
 
 
-  <!--
   <link name= "pick_tcp" />
-  -->
 
-<!--
   <joint name="pick_tcp_to_pick_tcp" type="fixed">
     <parent link="arrow_tcp" />
     <child link="pick_tcp" />
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
   </joint>
--->
 
     <xacro:arg name="camera_name"   default="oak" />
     <xacro:arg name="camera_model"  default="OAK-D" />
