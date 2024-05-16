@@ -3,18 +3,21 @@
      Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
-  <xacro:macro name="beugel_arrow">
-  <link name="beugel_link"/>
+  <xacro:macro name="beugel_with_arrow">
+  <link name="beugel_base_link"/>
   
- <joint name="beugel_link_to_beugel_link_mesh" type="fixed">
-    <parent link="beugel_link" />
-    <child link="beugel_link_mesh" />
+ <joint name="arrow_link_to_arrow_link_mesh" type="fixed">
+    <parent link="beugel_base_link" />
+    <child link="arrow_link_mesh" />
     <!--
     <origin xyz="0.0 0.00 0.01" rpy="${pi/2} 0 ${pi}"/> 
     -->
+    <!--
+    <origin xyz="0.00 0.04634 ${0.005-0.00254}" rpy="${-pi/6*1} 0 0"/> 
+    -->
     <origin xyz="0.0 0.00 0.01" rpy="0 0 0"/> 
   </joint>
-  <link name="beugel_link_mesh">
+  <link name="arrow_link_mesh">
     <inertial>
       <origin
 
@@ -67,10 +70,10 @@
       </geometry>
     </collision>
   </link>
+
   <link name="beugel_tool"/>
-  
  <joint name="beugel_link_to_beugel_tool" type="fixed">
-    <parent link="beugel_link" />
+    <parent link="beugel_base_link" />
     <child link="beugel_tool" />
     <origin xyz="0.0 0.00 0.005" rpy="0 0 0"/> 
   </joint>
@@ -78,7 +81,7 @@
 
     <link name="beugel_camera_pre"/> 
     <joint name="beugel_link_to_beugel_camera_pre" type="fixed">
-        <parent link="beugel_link" />
+        <parent link="beugel_base_link" />
         <child link="beugel_camera_pre" />
         <origin xyz="0.00 0.04634 ${0.005-0.00254}" rpy="${-pi/6*1} 0 0"/> 
     </joint> 
@@ -92,8 +95,8 @@
 
 
     <link name="arrow_tcp"/> 
-    <joint name="beugel_link_mesh_to_arrow_tcp" type="fixed">
-        <parent link="beugel_link_mesh" />
+    <joint name="arrow_link_mesh_to_arrow_tcp" type="fixed">
+        <parent link="arrow_link_mesh" />
         <child link="arrow_tcp" />
         <origin xyz=" 0.0  0.00 0.04308" rpy="0 0 0"/> 
       </joint>

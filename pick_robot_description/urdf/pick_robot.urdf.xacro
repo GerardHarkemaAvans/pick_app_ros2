@@ -189,37 +189,40 @@
     <origin xyz="0.0 0.0 0.01" rpy="0.0 0.0 ${pi}"/>
   </joint>
 
-  <link name= "pick_tcp" />
-
-
-
   <!-- bracket/beugel -->
-  <xacro:include filename="beugel/urdf/BeugelArrow.urdf.xacro" />
-  <xacro:beugel_arrow/>
+  <xacro:include filename="beugel/urdf/Beugel.urdf.xacro" />
+  <xacro:include filename="beugel/urdf/BeugelWithArrow.urdf.xacro" />
 
+<!--  
+  <xacro:beugel/>
+-->
+  <xacro:beugel_with_arrow/>
+
+  <!-- tool0 to beugel_base_position -->
+  <!-- cahnge these valuse to place the beugel on the right position -->
+
+  <joint name="beugel_base_position_to_tool0" type="fixed">
+    <parent link="tool0" />
+    <child link="beugel_base_link" />
+    <origin xyz="0.0 0.00 0.0" rpy="0 0 0"/> 
+  </joint>
+
+
+  <!--
+  <link name= "pick_tcp" />
+  -->
+
+<!--
   <joint name="pick_tcp_to_pick_tcp" type="fixed">
     <parent link="arrow_tcp" />
     <child link="pick_tcp" />
     <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
   </joint>
+-->
 
-
-  <!--
-  <xacro:include filename="beugel/urdf/Beugel.urdf.xacro" />
-  <xacro:beugel/>
-  -->
-
-  <!-- tool0 to beugel_base_position -->
-  <!-- cahnge these valuse to place the beugel on the right position -->
-  <joint name="beugel_base_position_to_tool0" type="fixed">
-    <parent link="tool0" />
-    <child link="beugel_link" />
-    <origin xyz="0.0 0.00 0.0" rpy="0 0 0"/> 
-  </joint>
-  
     <xacro:arg name="camera_name"   default="oak" />
     <xacro:arg name="camera_model"  default="OAK-D" />
-    <xacro:arg name="base_frame"    default="beugel_camera" />
+    <xacro:arg name="base_frame"    default="beugel_camerax" />
     <xacro:arg name="parent_frame"  default="beugel_camera" />
     <xacro:arg name="cam_pos_x"     default="0.0" />
     <xacro:arg name="cam_pos_y"     default="0.0" />
@@ -231,13 +234,12 @@
     <xacro:arg name="g"             default="0.0" />
     <xacro:arg name="b"             default="0.0" />
     <xacro:arg name="a"             default="1.0" />
-<!--
+
 
     <xacro:include filename="$(find depthai_descriptions)/urdf/include/depthai_macro.urdf.xacro"/>
--->
     <xacro:include filename="depthai_macro.urdf.xacro"/>
     <xacro:depthai_camera camera_name = "$(arg camera_name)"
-parent = "$(arg parent_frame)"
+                          parent = "$(arg parent_frame)"
                           camera_model = "$(arg camera_model)" 
                           base_frame = "$(arg base_frame)"
                           cam_pos_x = "$(arg cam_pos_x)"
@@ -252,7 +254,6 @@ parent = "$(arg parent_frame)"
                           a = "$(arg a)"
                           />
   
-
 <!--
 
   <xacro:include filename="epick/urdf/epick_single_suction_cup.xacro" />

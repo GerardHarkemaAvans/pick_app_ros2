@@ -4,10 +4,10 @@
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
 <robot xmlns:xacro="http://wiki.ros.org/xacro">
   <xacro:macro name="beugel">
-  <link name="beugel_link"/>
+  <link name="beugel_base_link"/>
   
  <joint name="beugel_link_to_beugel_link_mesh" type="fixed">
-    <parent link="beugel_link" />
+    <parent link="beugel_base_link" />
     <child link="beugel_link_mesh" />
     <origin xyz="0.0 0.00 0.01" rpy="${pi/2} 0 ${pi}"/> 
   </joint>
@@ -57,7 +57,7 @@
   <link name="beugel_tool"/>
   
  <joint name="beugel_link_to_beugel_tool" type="fixed">
-    <parent link="beugel_link" />
+    <parent link="beugel_base_link" />
     <child link="beugel_tool" />
     <origin xyz="0.0 0.00 0.005" rpy="0 0 0"/> 
   </joint>
@@ -65,7 +65,7 @@
 
     <link name="beugel_camera_pre"/> 
     <joint name="beugel_link_to_beugel_camera_pre" type="fixed">
-        <parent link="beugel_link" />
+        <parent link="beugel_base_link" />
         <child link="beugel_camera_pre" />
         <origin xyz="0.00 0.04634 ${0.005-0.00254}" rpy="${-pi/6*1} 0 0"/> 
     </joint> 
